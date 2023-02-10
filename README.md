@@ -6,7 +6,7 @@
 
 ### Project Description:
 
-For our project, we will be creating a web-based system that will track price drops from an e-commerce stores. We are contemplating on scraping price data from grocery stores (save-on-foods), second-hand e-commerce services (facebook marketplace), or eletronic e-commerce stores (newegg). Despite the difference in product content, all functionalities will be the same.  
+For our project, we will be creating a web-based system that will track price drops from e-commerce stores. We are contemplating on scraping price data from grocery stores (save-on-foods), second-hand e-commerce services (facebook marketplace), or eletronic e-commerce stores (newegg). Despite the difference in product content, all functionalities will be the same.  
 
 [**Reference Website:](https://camelcamelcamel.com) Camel Camel Camel**
 
