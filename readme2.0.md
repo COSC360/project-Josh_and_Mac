@@ -1,9 +1,3 @@
-# Project Proposal
-
-Course: https://www.notion.so/Web-Programming-42af69778aff4021b4dfdde51de73c2b
-Status: In progress
-Type: Assignment
-
 ## Project Proposal: Price-Tracker Web-Based System
 
 ---
