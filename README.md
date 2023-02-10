@@ -34,7 +34,7 @@ For our project, we will be creating a web-based system that will track price dr
 
 ### User Requirements:
 
-*User functionalities are aggregated bottom-up (User inherits non-user functionality, Admin inherits user and non-user functionality) 
+*User functionalities are aggregated bottom-up (User inherits non-user functionality, Admin inherits user and non-user functionality)*
 
 - Non-user functionalities
     - Set stores and their respective locations
