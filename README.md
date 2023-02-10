@@ -16,7 +16,7 @@ For our project, we will be creating a web-based system that will track price dr
 
 **Client Side:**  
 
-- HTML, CSS, JavaScript, React.JS
+- HTML, CSS, JavaScript
 
 **Server Side:** 
 
