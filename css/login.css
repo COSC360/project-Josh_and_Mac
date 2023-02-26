@@ -1,0 +1,12 @@
+.columnleft{
+    float: left;
+    position: relative;
+    overflow: auto;
+    width: 50%;
+}
+.columnright{
+    float:right;
+    position: relative;
+    overflow: auto;
+    width: 50%;
+}
