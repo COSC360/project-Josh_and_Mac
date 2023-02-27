@@ -14,9 +14,19 @@ img{
     width: 8em;
     height: 8em;
 }
-.container{
+body{
     background-color: darkolivegreen;
 }
 header, footer{
     background-color: grey;
+}
+button{
+    color: white;
+    background-color: blue;
+}
+.card{
+    background-color: white;
+    width: 10em;
+    margin: 1em;
+    border: solid black 1px;
 }
