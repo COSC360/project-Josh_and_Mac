@@ -10,3 +10,13 @@
     overflow: auto;
     width: 50%;
 }
+img{
+    width: 8em;
+    height: 8em;
+}
+.container{
+    background-color: darkolivegreen;
+}
+header, footer{
+    background-color: grey;
+}
