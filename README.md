@@ -24,10 +24,6 @@ For our project, we will be creating a web-based system that will track price dr
 
 ### Project Frameworks:
 
-**React.JS**
-
-- Can improve client-side time efficiency in query based page reloads
-
 **Boostrap.CSS**
 
 - Will aid in CSS layout for dynamic web-pages
