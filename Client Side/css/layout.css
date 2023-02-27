@@ -30,4 +30,12 @@ button{
     width: 10em;
     margin: 1em;
     border: solid black 1px;
+    float: left;
 }
+.left, .right, .centre{
+    float: left;
+    width: 33%;
+}
+/* .container{
+    background-color: tan;
+} */
