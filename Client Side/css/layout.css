@@ -19,10 +19,11 @@ body{
 }
 header, footer{
     background-color: grey;
+    clear:both;
 }
 button{
-    color: white;
-    background-color: blue;
+    color: black;
+    background-color: goldenrod;
 }
 .card{
     background-color: white;
