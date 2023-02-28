@@ -1,4 +1,4 @@
-html,body, header, footer, hgroup, nav, article, section, figure, figcaption, h1, h2, h3, ul, li, body, div, p, img{
+html,body, header, footer, hgroup, nav, article, section, figure, figcaption, h1, h2, h3, ul, li, body, div, p, img, button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .columnleft{
@@ -28,7 +28,8 @@ header, footer{
 }
 button{
     color: black;
-    background-color: goldenrod;
+    background-color: #b7b78a;
+    border: none;
 }
 .card{
     background-color: white;
@@ -39,22 +40,24 @@ button{
 }
 .left, .right, .centre{
     float: left;
-    width: 33%;
+    width: 30%;
+    margin: 0.5em;
 }
-/* .container{
+.container{
     background-color: tan;
-} */
+}
 .highlight {
     border: 2px solid red;
   }
 .flex-container {
     display: flex;
     background-color: #DDDDDD;
+    align-items: center;
 }
-.flex-container > div {
+.flex-container >#login {
     background-color:  #b7b78a;
     margin: 1em;
-    padding: 1em;
+    padding:0.1em;
 }
 footer {
     position:absolute;
