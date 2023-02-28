@@ -8,12 +8,13 @@
 </head>
 <header>
     <div class="flex-container">    
-        <div><a href="home.html">XTREME GPT</a></div>
-        <div><a href="login.html">Login/Sign Up</a></div>
+        <div><a href="home.html">X-TREME GPT (grocery price tracker)</a></div>
+        <div id="login"><a href="login.html">Login/Sign Up</a></div>
+        <button onclick="location.href = 'login.html';" id="login">login / sign up</button>
     </div>
 </header>
 <body>
-    <div class="container">
+    <div>
         <h3>Find a Product</h3>
         <form method="post" action="http://www.randyconnolly.com/tests/process.php">
             <input placeholder="Search for..." type="text" id="search" name="search" required>
@@ -29,22 +30,23 @@
                 <option value="vernon">Vernon</option>
                 <option value="vancouver">Vancouver</option>
             </select>
-            <input type="submit">
+            <button type="submit">Submit</button>
+            <button onclick="location.href='browse.html';" id="browseButton">Browse all items</button>
         </form>
-    
+    <div class="container">
         <div>
-        <p class="lead">Welcome...</p>
+        <p class="lead">Welcome to X-TREME GPT, your source for x-treme grocery price tracking to help save your hard earned cash!</p>
         <h4>View Price History</h4>
         <p>
-            Description...
+            X-TREME GPT allows you to view price history of your grocery products.
         </p>
         <h4>Watch and See</h4>
         <p>
-            Add items to basket and track prices
+            Add items to basket and track prices. Check to see what products are on sale, and stock up when prices are low!
         </p>
         <h4>Compare</h4>
         <p>
-            Search and compare...
+            Search products and compare across different stores and locations
         </p>
         <p>
             Get started now! <a href="login.html"> Create a free account</a>
@@ -52,9 +54,9 @@
      </div>
      <hr>
      <div>
-        <p class="left">More info 1</p>
-        <p class="centre">More info 2</p>
-        <p class="right">More info 3</p>
+        <p class="left">View Product details and price history</p>
+        <p class="centre">Add or remove items from your basket</p>
+        <p class="right">Buy direct from grocery store website</p>
      </div>
         <div class="left">
         <h4>Top Product!</h4>
@@ -67,11 +69,12 @@
      <div class="right">
         <h4>Most Comments!</h4>
         <p>Bananas $0.87</p>
-        </div>
+    </div>
+    </div>
     </div>
     <footer>
         <p>
-            <a href="#">Home</a> |
+            <a href="home.html">Home</a> |
             <a href="browse.html">Browse</a>
         </p>
         <p>

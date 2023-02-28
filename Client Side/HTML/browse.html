@@ -8,8 +8,9 @@
 </head>
 <header>
     <div class="flex-container">    
-        <div><a href="home.html">XTREME GPT</a></div>
-        <div><a href="login.html">Login/Sign Up</a></div>
+        <div><a href="home.html">X-TREME GPT (grocery price tracker)</a></div>
+        <div id="login"><a href="login.html">Login/Sign Up</a></div>
+        <button onclick="location.href = 'login.html';" id="login">login / sign up</button>
     </div>
 </header>
 <body>
@@ -29,7 +30,8 @@
                 <option value="vernon">Vernon</option>
                 <option value="vancouver">Vancouver</option>
             </select>
-            <input type="submit">
+            <button type="submit">Submit</button>
+            <button onclick="location.href='browse.html';" id="browseButton">Browse all items</button>
         </form>
     </div>
     <div>
@@ -55,7 +57,7 @@
     </div>
     <footer>
         <p>
-            <a href="#">Home</a> |
+            <a href="home.html">Home</a> |
             <a href="browse.html">Browse</a>
         </p>
         <p>
