@@ -7,26 +7,27 @@
 	<link rel="stylesheet" href="../css/layout.css"/>
 </head>
 <header>
-    NAV BAR GOES HERE
+    <a href="#">XTREME GPT</a>
+    <a href="#">Login/Sign Up</a>
 </header>
 <body>
     <div class="container">
         <h3>Find a Product</h3>
-        <form>
-            <input placeholder="Search for..." type="text" id="search" name="search">
-            <select name="store" id="store">
+        <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+            <input placeholder="Search for..." type="text" id="search" name="search" required>
+            <select name="store" id="store" required>
                 <option value="superstore">Superstore</option>
                 <option value="saveon">Save-On-Foods</option>
                 <option value="walmart">Walmart</option>
                 <option value="sobeys">Safeway/Sobeys</option>
             </select>
-            <select name="city" id="city">
+            <select name="city" id="city" required>
                 <option value="kelowna">Kelowna</option>
                 <option value="calgary">Calgary</option>
                 <option value="vernon">Vernon</option>
                 <option value="vancouver">Vancouver</option>
             </select>
-            <button type="submit">Search</button>
+            <input type="submit">
         </form>
     
         <div>

@@ -39,3 +39,7 @@ button{
 /* .container{
     background-color: tan;
 } */
+.highlight {
+    border: 2px solid red;
+  }
+

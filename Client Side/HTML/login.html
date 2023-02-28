@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
+    <script type="text/javascript" src="../script/validation.js"></script>
 </head>
 <header>
     NAV BAR GOES HERE
@@ -13,7 +14,7 @@
 	<h1>Login/Sign Up</h1>
 	<div>
 		<div class="columnleft">
-			<form>
+			<form method="get" action="http://www.randyconnolly.com/tests/process.php" id="loginForm">
                 <fieldset>
                     <h2>Login</h2>
                     <p>
@@ -24,13 +25,13 @@
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" required>
                     </p>
-                    <button type="submit">Login</button>
+                    <input type="submit">
                     <a href="#" class="btn btn-info" role="button">forgot password?</a>
                 </fieldset>
 			</form>
 		</div>
 		<div class="columnright">
-			<form>
+			<form method="post" action="http://www.randyconnolly.com/tests/process.php">
                 <fieldset>
                     <h2>Create a Free Account</h2>
                     <p>
@@ -60,14 +61,14 @@
                     </p>
                     <p>
                         <label for="email">Receive Email Updates?</label>
-                        <input type="checkbox" name="email">
+                        <input type="checkbox" name="update">
                     </p>
                     <p>
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" required>
                     </p>
-                    <button type="submit">Register</button>
-                    <button type="reset">Clear</button>
+                    <input type="submit">
+                    <input type="reset">
                 </fieldset>
 			</form>
         </div>
