@@ -1,24 +1,29 @@
+html,body, header, footer, hgroup, nav, article, section, figure, figcaption, h1, h2, h3, ul, li, body, div, p, img{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 .columnleft{
     float: left;
     position: relative;
     overflow: auto;
     width: 50%;
+    height: 600px;
 }
 .columnright{
     float:right;
     position: relative;
     overflow: auto;
     width: 50%;
+    height: 600px;
 }
 img{
     width: 8em;
     height: 8em;
 }
 body{
-    background-color: darkolivegreen;
+    background-color: #658864;
 }
 header, footer{
-    background-color: grey;
+    background-color: #DDDDDD;
     clear:both;
 }
 button{
@@ -42,4 +47,20 @@ button{
 .highlight {
     border: 2px solid red;
   }
-
+.flex-container {
+    display: flex;
+    background-color: #DDDDDD;
+}
+.flex-container > div {
+    background-color:  #b7b78a;
+    margin: 1em;
+    padding: 1em;
+}
+footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:50px; 
+    background:#DDDDDD;
+    padding: 0.1em;
+ }
