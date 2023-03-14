@@ -37,6 +37,7 @@ button{
     margin: 1em;
     border: solid black 1px;
     float: left;
+    
 }
 .left, .right, .centre{
     float: left;

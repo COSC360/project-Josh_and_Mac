@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Product</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../css/layout.css"/>
+</head>
+<header>
+    <div class="flex-container">    
+        <div><a href="home.html">X-TREME GPT (grocery price tracker)</a></div>
+        
+        <button onclick="location.href = 'login.html';" id="login">login / sign up</button>
+    </div>
+</header>
+<body>
+    <div id="prodinfo">
+        <p id="prodname">Product Name - fill from database</p>
+        <p id="description">Description  - fill from databse</p>
+        <p id="price">Price - fill from database</p>
+    </div>
+    <figure class="productfig">
+        <div class="card">
+            <p><img class="card-img" src="https://assets.shop.loblaws.ca/products/20253488001/b1/en/front/20253488001_front_a01_@2.png"> fill from DB</p>
+        </div>
+        <p><form method="post" action="http://www.randyconnolly.com/tests/process.php">
+            <label for="pricealert">set alert price: </label>
+            <input type="number" min="0" step="0.01" id="pricealert" name="pricealert">
+            <button type="submit">Submit</button>
+        </form></p>
+        <a href="basket.html">Basket</a>
+        <a href="store.html">Store</a>
+    </figure>
+    <div class = "comments">
+        <h4>Comments:</h4>
+        <p>Fill comments from DB - table?</p>
+        <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+            <p>
+                <label for="rating">Rating /5: </label>
+                <select name="rating" id="rating" required>
+                    <option value="1">1 star</option>
+                    <option value="2">2 star</option>
+                    <option value="3">3 star</option>
+                    <option value="4">4 star</option>
+                    <option value="5">5 star</option>
+                </select>
+            </p>
+            <p>
+                <label for="comment">Comment: </label>
+                <input type="text" id="comment" name="comment">
+            </p>
+            <button type="submit">Post</button>
+            <button type="reset">Clear</button>
+        </form>
+    </div>
+    <div class="chart">
+        <p>
+            Insert price chart here
+        </p>
+    </div>
+    <button onclick="location.href = 'browse.html';">back to browse</button>
+    <footer>
+        <p>
+            <a href="home.html">Home</a> |
+            <a href="browse.html">Browse</a>
+        </p>
+        <p>
+            <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>
+        </p>
+    </footer>
+</body>
