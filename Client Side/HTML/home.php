@@ -1,3 +1,13 @@
+<?php
+// We need to use sessions, so you should always start sessions using the below code.
+session_start();
+// If the user is not logged in redirect to the home page not signed in...
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: home.html');
+	exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +29,7 @@
             </svg>X-TREME GPT (grocery price tracker)</a></div>
         
         <button onclick="location.href = 'login.html';" id="login">login / sign up</button>
+        <p>Welcome, <?=$_SESSION['name']?>!</p>
         <button onclick="location.href = 'logout.php';" id="logout">logout</button>
     </div>
 </header>
