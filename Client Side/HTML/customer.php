@@ -1,3 +1,29 @@
+<?php
+// We need to use sessions, so you should always start sessions using the below code.
+session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: index.html');
+	exit;
+}
+$DATABASE_HOST = 'localhost';
+$DATABASE_USER = 'root';
+$DATABASE_PASS = '';
+$DATABASE_NAME = 'gptdb';
+$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+if (mysqli_connect_errno()) {
+	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
+}
+// We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
+$stmt = $con->prepare('SELECT username, password, email, store, name, updates FROM accounts WHERE id = ?');
+// In this case we can use the account ID to get the account info.
+$stmt->bind_param('i', $_SESSION['id']);
+$stmt->execute();
+$stmt->bind_result($username, $password, $email, $store, $name, $updates);
+$stmt->fetch();
+$stmt->close();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,23 +47,23 @@
 			<table>
                 <tr>
                     <td>Username: </td>
-                    <td id="username">Fill from database</td>
+                    <td><?=$username?></td>
                 </tr>
                 <tr>
                     <td>Name: </td>
-                    <td id="name">Fill from database</td>
+                    <td><?=$name?></td>
                 </tr>
                 <tr>
                     <td>Email: </td>
-                    <td id="email">Fill from database</td>
+                    <td><?=$email?></td>
                 </tr>
                 <tr>
                     <td>Favorite Store: </td>
-                    <td id="store">Fill from database</td>
+                    <td><?=$store?></td>
                 </tr>
                 <tr>
                     <td>Email Updates: </td>
-                    <td id="updates">Fill from database</td>
+                    <td><?=$updates?></td>
                 </tr>
             </table>
             <button onclick="location.href = 'edit_customer.html';">Edit</button>
