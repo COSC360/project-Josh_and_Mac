@@ -78,7 +78,7 @@ $search = $_POST['search'];
             <img class="card-img" src='.$row["imgsrc"].'>
             <div class="cardPrices">Price per: $'.$row["monPrice"].'</div>
             <div class="unitSize">$5.50/kg</div>
-            <div class="link"><a href="">Product </a><a href=""> Basket </a><a href=""> Store</a></div>
+            <div class="link"><a href="product.php?name='.$row["name"].'">Product </a><a href=""> Basket </a><a href=""> Store</a></div>
         </div>
     </div>';
     }?>
