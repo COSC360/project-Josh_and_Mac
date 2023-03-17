@@ -15,7 +15,7 @@ if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 // We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
-$stmt = $con->prepare('SELECT username, password, email, store, name, updates FROM accounts WHERE id = ?');
+$stmt = $con->prepare('SELECT username, password, email, store, name, updates FROM account WHERE id = ?');
 // In this case we can use the account ID to get the account info.
 $stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
