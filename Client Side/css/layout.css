@@ -68,3 +68,9 @@ footer {
     background:#DDDDDD;
     padding: 0.1em;
  }
+ .comments{
+    overflow-y: scroll;
+    max-height: 25vh;
+    max-width: 30%; 
+
+ }

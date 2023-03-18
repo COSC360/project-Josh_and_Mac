@@ -40,6 +40,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM account WHERE username = ?')
             $_SESSION['name'] = $_POST['username'];
             $_SESSION['id'] = $id;
             echo 'Welcome ' . $_SESSION['name'] . '!';
+            header('Location: home.html');
         } else {
             // Incorrect password
             echo 'Incorrect username and/or password!';

@@ -3,8 +3,7 @@
 session_start();
 // If the user is not logged in redirect to the home page...
 if (!isset($_SESSION['loggedin'])) {
-    echo "must log in to see product detial";
-	header('Location: home.html');
+	header('Location: home.html'); 
 	exit;
 }
 $DATABASE_HOST = 'localhost';
@@ -40,7 +39,7 @@ $stmt2->close();
 // $stmt3->execute();
 
 // $stmt3->close();
-}
+//}
 ?>
 
 <!DOCTYPE html>
