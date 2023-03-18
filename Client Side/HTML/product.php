@@ -2,9 +2,10 @@
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the home page...
-if (isset($_SESSION['loggedin'])) {
-	//header('Location: home.html');
-	//exit;
+if (!isset($_SESSION['loggedin'])) {
+    echo "must log in to see product detial";
+	header('Location: home.html');
+	exit;
 }
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
@@ -32,12 +33,14 @@ $result2 = $stmt2->get_result();
 
 $stmt2->close();
 
-// $stmt3 = $con->prepare('INSERT INTO comments (rating, comment) VALUES ('.$_POST["rating"].', '.$_POST["comment"].') WHERE name LIKE ?');
+// if(($_POST["rating"]!==null && $_POST["comment"]!==null)){
+// $stmt3 = $con->prepare('INSERT INTO comments (rating, comment, name, username) VALUES ("'.$_POST["rating"].'", "'.$_POST["comment"].'", ?, "'.$_SESSION["name"].'")');
 // // In this case we can use the search to get the comment info.
 // $stmt3->bind_param('s', $search);
 // $stmt3->execute();
 
 // $stmt3->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -86,12 +89,12 @@ $stmt2->close();
             <?php
     while($row = $result2->fetch_assoc()) {
         echo '<tr>
-                <td>'/*.$row["username"].*/.'hello</td>
+                <td>'.$row["username"].'</td>
                 <td>'.$row["rating"].'</td>
                 <td>'.$row["comment"].'</td>
                 </tr>';}?>
         
-        <form method="post" action="product.php">
+        <form method="post" action="product.php?name=<?=$search?>">
             <p>
                 <label for="rating">Rating /5: </label>
                 <select name="rating" id="rating" required>
@@ -106,7 +109,7 @@ $stmt2->close();
                 <label for="comment">Comment: </label>
                 <textarea id="comment" name="comment" rows="5" cols="40"></textarea>
             </p>
-            <button type="submit">Post</button> | 
+            <button type="submit" onclick=>Post</button> | 
             <button type="reset">Clear</button>
         </form>
     </div>
