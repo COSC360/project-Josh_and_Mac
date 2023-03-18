@@ -23,6 +23,21 @@ $stmt->execute();
 $stmt->bind_result($id, $name, $description, $category, $monPrice, $tuePrice, $wedPrice, $thrPrice, $friPrice, $satPrice, $sunPrice, $imgsrc);
 $stmt->fetch();
 $stmt->close();
+
+$stmt2 = $con->prepare('SELECT * FROM comments WHERE name LIKE ?');
+// In this case we can use the search to get the comment info.
+$stmt2->bind_param('s', $search);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+
+$stmt2->close();
+
+// $stmt3 = $con->prepare('INSERT INTO comments (rating, comment) VALUES ('.$_POST["rating"].', '.$_POST["comment"].') WHERE name LIKE ?');
+// // In this case we can use the search to get the comment info.
+// $stmt3->bind_param('s', $search);
+// $stmt3->execute();
+
+// $stmt3->close();
 ?>
 
 <!DOCTYPE html>
@@ -50,18 +65,33 @@ $stmt->close();
         <div class="card">
             <p><img class="card-img" src=<?=$imgsrc?>></p>
         </div>
-        <p><form method="post" action="http://www.randyconnolly.com/tests/process.php">
+        <p><form method="post" action="product.php">
             <label for="pricealert">set alert price: </label>
             <input type="number" min="0" step="0.01" id="pricealert" name="pricealert">
             <button type="submit">Submit</button>
         </form></p>
+        <p> 
         <a href="basket.html">Basket</a>
         <a href="store.html">Store</a>
+        </p>
     </figure>
     <div class = "comments">
         <h4>Comments:</h4>
-        <p>Fill comments from DB - table?</p>
-        <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Rating</th>
+                <th>Comments</th>
+            </tr>
+            <?php
+    while($row = $result2->fetch_assoc()) {
+        echo '<tr>
+                <td>'/*.$row["username"].*/.'hello</td>
+                <td>'.$row["rating"].'</td>
+                <td>'.$row["comment"].'</td>
+                </tr>';}?>
+        
+        <form method="post" action="product.php">
             <p>
                 <label for="rating">Rating /5: </label>
                 <select name="rating" id="rating" required>
@@ -74,9 +104,9 @@ $stmt->close();
             </p>
             <p>
                 <label for="comment">Comment: </label>
-                <input type="text" id="comment" name="comment">
+                <textarea id="comment" name="comment" rows="5" cols="40"></textarea>
             </p>
-            <button type="submit">Post</button>
+            <button type="submit">Post</button> | 
             <button type="reset">Clear</button>
         </form>
     </div>
