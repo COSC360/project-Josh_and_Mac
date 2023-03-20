@@ -1,24 +1,19 @@
 <?php
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
-// If the user is not logged in redirect to the home page...
-if (isset($_SESSION['loggedin'])) {
-	//header('Location: home.html');
-	//exit;
+include "connectDB.php"; 
+if(empty($_POST['search'])){ 
+    $stmt = $con->prepare('SELECT * FROM product');
+    $searchTitle = "All Items";
+} else { 
+    $stmt = $con->prepare('SELECT * FROM product WHERE name LIKE ?');
+    $search = '%'.$_POST['search'].'%';
+    echo "<h3>".$_POST['chain']."</h3>"; 
+    echo "<h3>".$_POST['chain_location']."</h3>"; 
+    echo "<h3>".$search."</h3>";
+    $stmt->bind_param('s', $search);
+    $searchTitle = $_POST['search'];
 }
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'gptdb';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-if (mysqli_connect_errno()) {
-	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
-}
-// We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
-$stmt = $con->prepare('SELECT * FROM product WHERE name LIKE ?');
-// In this case we can use the search to get the account info.
-$search = '%'.$_POST['search'].'%';
-$stmt->bind_param('s', $search);
 $stmt->execute();
 $result = $stmt->get_result();
 //$stmt->bind_result($id, $name, $description, $category, $monPrice, $tuePrice, $wedPrice, $thrPrice, $friPrice, $satPrice, $sunPrice, $imgsrc);
@@ -27,8 +22,6 @@ $result = $stmt->get_result();
 //     echo "<tr><td>".$row["name"]."</td><td>".$row["monPrice"]."</td></tr>";
 // }
 $stmt->close();
-
-$search = $_POST['search'];
 ?>
 
 <!DOCTYPE html>
@@ -40,48 +33,45 @@ $search = $_POST['search'];
 	<link rel="stylesheet" href="../css/layout.css"/>
 </head>
 <header>
-    <div class="flex-container">    
-        <div><a href="home.html">X-TREME GPT (grocery price tracker)</a></div>
-        
-        <button onclick="location.href = 'login.html';" id="login">login / sign up</button>
-    </div>
+    <?php include "navbar.php" ?>
 </header>
 <body>
     <div>
         <h3>Find a Product</h3>
         <form method="post" action="browse.php">
-            <input placeholder="Search for..." type="text" id="search" name="search" required>
-            <select name="store" id="store" required>
-                <option value="superstore">Superstore</option>
-                <option value="saveon">Save-On-Foods</option>
-                <option value="walmart">Walmart</option>
-                <option value="sobeys">Safeway/Sobeys</option>
+            <input placeholder="Search for..." type="text" id="search" name="search">
+            <select name="chain" id="chain" required>
+                <option value="superstore"<?php if($_POST['chain'] == 'superstore') { echo ' selected'; } ?>>Superstore</option>
+                <option value="saveonfoods"<?php if($_POST['chain'] == 'saveonfoods') { echo ' selected'; } ?>>Save-On-Foods</option>
+                <option value="walmart" <?php if($_POST['chain'] == 'walmart') { echo ' selected'; } ?>>Walmart</option>
+                <option value="sobeys" <?php if($_POST['chain'] == 'sobeys') { echo ' selected'; } ?>>Safeway/Sobeys</option>
             </select>
-            <select name="city" id="city" required>
-                <option value="kelowna">Kelowna</option>
-                <option value="calgary">Calgary</option>
-                <option value="vernon">Vernon</option>
-                <option value="vancouver">Vancouver</option>
+            <select name="chain_location" id="chain_location" required>
+                <option value="kelowna"<?php if($_POST['chain_location'] == 'kelowna') { echo ' selected'; } ?>>Kelowna</option>
+                <option value="calgary"<?php if($_POST['chain_location'] == 'calgary') { echo ' selected'; } ?>>Calgary</option>
+                <option value="vernon"<?php if($_POST['chain_location'] == 'vernon') { echo ' selected'; } ?>>Vernon</option>
+                <option value="vancouver"<?php if($_POST['chain_location'] == 'vancouver') { echo ' selected'; } ?>>Vancouver</option>
             </select>
             <button type="submit">Submit</button>
-            <button onclick="location.href='browse.html';" id="browseButton">Browse all items</button>
         </form>
     </div>
-    <div>
-        <h3>Search Results for <?=$search?></h3>
-    </div>
     <?php
-    while($row = $result->fetch_assoc()) {
-        echo ' <div class="col">
-        <div class="card">
-            <h5>'.$row["name"].'</h5>
-            <img class="card-img" src='.$row["imgsrc"].'>
-            <div class="cardPrices">Price per: $'.$row["monPrice"].'</div>
-            <div class="unitSize">$5.50/kg</div>
-            <div class="link"><a href="product.php?name='.$row["name"].'">Product </a><a href=""> Basket </a><a href=""> Store</a></div>
-        </div>
-    </div>';
-    }?>
+    $row = $result;  
+    if(empty($row)){ 
+        echo " <div><h3>No Search Results found for ".$searchTitle."</h3></div>";
+    } else { 
+        echo"<div><h3>Search Results for ".$searchTitle."</h3></div>";
+        while($row = $result->fetch_assoc()) {
+                echo '<div class="col">
+                    <div class="card">
+                        <h5>'.$row["name"].'</h5>
+                        <img class="card-img" src='.$row["imgsrc"].'>
+                        <div class="cardPrices">Price per: $'.$row["monPrice"].'</div>
+                        <div class="unitSize">$5.50/kg</div>
+                        <div class="link"><a href="product.php?name='.$row["name"].'">Product </a><a href=""> Basket </a><a href=""> Store</a></div>
+                </div></div>';
+            
+    }}?>
     
     <!-- <div class="col">
         <div class="card">

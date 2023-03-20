@@ -32,14 +32,14 @@ $result2 = $stmt2->get_result();
 
 $stmt2->close();
 
-if(($_POST["rating"]!==null && $_POST["comment"]!==null)){
-$stmt3 = $con->prepare('INSERT INTO comments (rating, comment, name, username) VALUES ("'.$_POST["rating"].'", "'.$_POST["comment"].'", ?, "'.$_SESSION["name"].'")');
-// In this case we can use the search to get the comment info.
-$stmt3->bind_param('s', $search);
-$stmt3->execute();
+// if(($_POST["rating"]!==null && $_POST["comment"]!==null)){
+// $stmt3 = $con->prepare('INSERT INTO comments (rating, comment, name, username) VALUES ("'.$_POST["rating"].'", "'.$_POST["comment"].'", ?, "'.$_SESSION["name"].'")');
+// // In this case we can use the search to get the comment info.
+// $stmt3->bind_param('s', $search);
+// $stmt3->execute();
 
-$stmt3->close(); 
-}
+// $stmt3->close();
+//}
 ?>
 
 <!DOCTYPE html>

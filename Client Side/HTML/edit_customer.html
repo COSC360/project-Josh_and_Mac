@@ -18,7 +18,7 @@
 	<h1>Edit Customer Information</h1>
 	<div>
 		<div class="columnleft">
-			<form method="post" action="edituser.php" id="editForm">
+			<form method="get" action="http://www.randyconnolly.com/tests/process.php" id="loginForm">
                     <p>
                         <label for="username">Username: </label>
                         <input type="text" id="username" name="username">
@@ -29,20 +29,15 @@
                     </p>
                     <p>
                         <label for="email">Email: </label>
-                        <input type="text" id="email" name="email">
+                        <input type="text" id="username" name="username">
                     </p>
                     <p>
-                        <label for="store">Favourite Store</label>
-                        <select name="store" id="store">
-                            <option value="superstore">Superstore</option>
-                            <option value="saveon">Save-On-Foods</option>
-                            <option value="walmart">Walmart</option>
-                            <option value="sobeys">Safeway/Sobeys</option>
-                          </select>
+                        <label for="store">Favorite Store: </label>
+                        <input type="text" id="store" name="tore">
                     </p>
                     <p>
                         <label for="updates">Email Updates: </label>
-                        <input type="checkbox" id="updates" name="updates" value="yes">
+                        <input type="checkbox" id="updates" name="updates">
                     </p>
                     <button type="submit">Submit</button>
 			</form>
