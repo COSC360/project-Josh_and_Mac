@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php session_start(); ?> 
 	<title>Login / Signup</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,7 @@
     <script type="text/javascript" src="../script/validation.js"></script>
 </head>
 <header>
-   <?php include "navbar.php"?>
+   <?php session_start(); include "navbar.php"?>
 </header>
 <body>
 	<h1>Login/Sign Up</h1>

@@ -1,14 +1,5 @@
 <?php
- 
- $DATABASE_HOST = 'localhost';
- $DATABASE_USER = 'root';
- $DATABASE_PASS = '';
- $DATABASE_NAME = 'gptdb';
- $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
- if (mysqli_connect_errno()) {
-     exit('Failed to connect to MySQL: ' . mysqli_connect_error());
- }
-          
+ include "connectDB.php";
         // Taking all 5 values from the form data(input)
         $name =  $_REQUEST['name'];
         $username = $_REQUEST['username'];
@@ -29,9 +20,13 @@
  
             echo nl2br("\n$name\n $username\n "
                 . "$password\n $store\n $email\n $updates");
-        } else{
-            echo "ERROR: Hush! Sorry $sql. "
+        } else {
+            if(mysqli_errno($con) == 1062) { 
+            
+            } else { 
+                echo "ERROR: Hush! Sorry $sql. "
                 . mysqli_error($con);
+            }
         }
          
         // Close connection

@@ -34,11 +34,7 @@ $stmt->close();
     <script type="text/javascript" src="../script/validation.js"></script>
 </head>
 <header>
-    <div class="flex-container">    
-        <div><a href="home.html">X-TREME GPT (grocery price tracker)</a></div>
-        
-        <button onclick="location.href = 'login.html';" id="login">login / sign up</button>
-    </div>
+    <?php include "navbar.php";?>
 </header>
 <body>
 	<h1>Customer Information</h1>
@@ -66,9 +62,9 @@ $stmt->close();
                     <td><?=$updates?></td>
                 </tr>
             </table>
-            <button onclick="location.href = 'edit_customer.html';">Edit</button>
-            <button onclick="location.href = 'home.html';">Back</button>
-            <button onclick="location.href = 'changepassword.html';">Change Password</button>
+            <button onclick="location.href = 'editcustomer.php';">Edit</button>
+            <button onclick="location.href = 'home.php';">Back</button>
+            <button onclick="location.href = 'changepassword.php';">Change Password</button>
 			
 		</div>
 		
@@ -76,8 +72,8 @@ $stmt->close();
         </body>
         <footer>
             <p>
-                <a href="home.html">Home</a> |
-                <a href="browse.html">Browse</a>
+                <a href="home.php">Home</a> |
+                <a href="browse.php">Browse</a>
             </p>
             <p>
                 <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>

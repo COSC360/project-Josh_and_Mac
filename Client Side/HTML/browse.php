@@ -2,17 +2,19 @@
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 include "connectDB.php"; 
+$chain = $_POST['chain']; 
+$chain_location = $_POST['chain_location']; 
 if(empty($_POST['search'])){ 
     $stmt = $con->prepare('SELECT * FROM product');
-    $searchTitle = "All Items";
+    $searchTitle = "All Items in ".$chain." at location: ".$chain_location;
 } else { 
     $stmt = $con->prepare('SELECT * FROM product WHERE name LIKE ?');
-    $search = '%'.$_POST['search'].'%';
-    echo "<h3>".$_POST['chain']."</h3>"; 
-    echo "<h3>".$_POST['chain_location']."</h3>"; 
+    $search = '%'.trim($_POST['search']).'%';
+    echo "<h3>".$chain."</h3>"; 
+    echo "<h3>".$chain_location."</h3>"; 
     echo "<h3>".$search."</h3>";
     $stmt->bind_param('s', $search);
-    $searchTitle = $_POST['search'];
+    $searchTitle = $_POST['search']." in ".$chain." at location: ".$chain_location;
 }
 $stmt->execute();
 $result = $stmt->get_result();
@@ -56,8 +58,8 @@ $stmt->close();
         </form>
     </div>
     <?php
-    $row = $result;  
-    if(empty($row)){ 
+    $rowcount = mysqli_num_rows($result);  
+    if(empty($rowcount)){ 
         echo " <div><h3>No Search Results found for ".$searchTitle."</h3></div>";
     } else { 
         echo"<div><h3>Search Results for ".$searchTitle."</h3></div>";
@@ -71,7 +73,8 @@ $stmt->close();
                         <div class="link"><a href="product.php?name='.$row["name"].'">Product </a><a href=""> Basket </a><a href=""> Store</a></div>
                 </div></div>';
             
-    }}?>
+    }} mysqli_free_result($result);
+    ?>
     
     <!-- <div class="col">
         <div class="card">

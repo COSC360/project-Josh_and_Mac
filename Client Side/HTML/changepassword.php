@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../script/validation.js"></script>
 </head>
 <header>
-    <?php n?>
+    <?php include "navbar.php";?>
 </header>
 <body>
 	<h1>Change Password</h1>
@@ -33,7 +33,7 @@
                     </p>
                     <button type="submit">Submit</button>
 			</form>
-            <button onclick="location.href = 'edit_customer.html';">Back</button>
+            <button onclick="location.href = 'editcustomer.php';">Back</button>
 		</div>
 		
         </div>
