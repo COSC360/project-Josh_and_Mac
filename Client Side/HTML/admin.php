@@ -60,7 +60,7 @@ $stmt->close();
                 <td>'.$row["name"].'</td>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["email"].'</td>
-                <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'">Delete</a></td>
+                <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td>
                 </tr>';
             
     }}mysqli_free_result($result);
