@@ -86,14 +86,27 @@ $stmt3->close();
                 <th>Comments</th>
             </tr>
             <?php
+    if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admin"] === true){
     while($row = $result2->fetch_assoc()) {
         echo '<tr>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["rating"].'</td>
                 <td>'.$row["comment"].'</td>
-                </tr>';}?>
-        
-        <form method="post" action="product.php?name=<?=$search?>">
+                <td><a href="deleteComment.php?comid='.$row["comid"].'">Delete Comment</a></td>
+                </tr>';}
+    }
+    else{
+        while($row = $result2->fetch_assoc()) {
+            echo '<tr>
+                    <td>'.$row["username"].'</td>
+                    <td>'.$row["rating"].'</td>
+                    <td>'.$row["comment"].'</td>
+                    </tr>';}
+    }
+    ?>
+    <?php        
+    if (isset($_SESSION["id"]) && isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
+        echo '<form method="post" action="product.php?name=<?=$search?>">
             <p>
                 <label for="rating">Rating /5: </label>
                 <select name="rating" id="rating" required>
@@ -110,7 +123,9 @@ $stmt3->close();
             </p>
             <button type="submit" onclick=>Post</button> | 
             <button type="reset">Clear</button>
-        </form>
+        </form>';
+    }
+        ?>
     </div>
     <div class="chart">
         <p>
