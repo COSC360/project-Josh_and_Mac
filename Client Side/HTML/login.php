@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
-    <script type="text/javascript" src="../script/validation.js"></script>
+    <!-- <script type="text/javascript" src="../script/validation.js"></script> -->
 </head>
 <header>
    <?php session_start(); include "navbar.php"?>
