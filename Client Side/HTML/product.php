@@ -1,9 +1,9 @@
 <?php
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
-// If the user is not logged in redirect to the home page...
+// If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
-	header('Location: home.html'); 
+	header('Location: login.php'); 
 	exit;
 }
 $DATABASE_HOST = 'localhost';
@@ -14,9 +14,9 @@ $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_
 if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
-// We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
+
 $stmt = $con->prepare('SELECT * FROM product WHERE name LIKE ?');
-// In this case we can use the search to get the account info.
+// In this case we can use the search to get the product info.
 $search = $_GET['name'];
 $stmt->bind_param('s', $search);
 $stmt->execute();
@@ -32,13 +32,16 @@ $result2 = $stmt2->get_result();
 
 $stmt2->close();
 
-if(($_POST["rating"]!==null && $_POST["comment"]!==null)){
-$stmt3 = $con->prepare('INSERT INTO comments (rating, comment, name, username) VALUES ("'.$_POST["rating"].'", "'.$_POST["comment"].'", ?, "'.$_SESSION["name"].'")');
+function insertComment(){
+    include "connectDB.php";
+//if(($_POST["rating"]!==null && $_POST["comment"]!==null)){
+$stmt3 = $con->prepare('INSERT INTO comments (rating, comment, name, username) VALUES ("'.$_POST["rating"].'", "'.$_POST["comment"].'", ?, "'.$_SESSION["username"].'")');
 // In this case we can use the search to get the comment info.
 $stmt3->bind_param('s', $search);
 $stmt3->execute();
 
 $stmt3->close();
+//}
 }
 ?>
 
@@ -51,11 +54,7 @@ $stmt3->close();
 	<link rel="stylesheet" href="../css/layout.css"/>
 </head>
 <header>
-    <div class="flex-container">    
-        <div><a href="home.html">X-TREME GPT (grocery price tracker)</a></div>
-        
-        <button onclick="location.href = 'login.html';" id="login">login / sign up</button>
-    </div>
+        <?php include "navbar.php"; ?>
 </header>
 <body>
     <div id="prodinfo">
@@ -86,14 +85,31 @@ $stmt3->close();
                 <th>Comments</th>
             </tr>
             <?php
+            //$_SESSION["is_admin"] = true; // added until admin functionality is implemented
+    if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admin"] === true){
     while($row = $result2->fetch_assoc()) {
         echo '<tr>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["rating"].'</td>
                 <td>'.$row["comment"].'</td>
-                </tr>';}?>
-        
-        <form method="post" action="product.php?name=<?=$search?>">
+                <td><a href="deleteComment.php?comid='.$row["comid"].'">Delete Comment</a></td>
+                </tr>';}
+    }
+    else{
+        while($row = $result2->fetch_assoc()) {
+            echo '<tr>
+                    <td>'.$row["username"].'</td>
+                    <td>'.$row["rating"].'</td>
+                    <td>'.$row["comment"].'</td>
+                    ';if($_SESSION["username"] === $row["username"]) echo '<td><a href="deleteComment.php?comid='.$row["comid"].'">Delete Comment</a></td></tr>';
+                    else echo'
+                    </tr>';}
+    }
+    ?>
+    <?php       
+    $_SESSION['logged_in'] = true; // won't work unless specified here?
+    if (isset($_SESSION['logged_in'])){
+        echo '<form method="post" action="enterComment.php?search='.$search.'">
             <p>
                 <label for="rating">Rating /5: </label>
                 <select name="rating" id="rating" required>
@@ -106,11 +122,13 @@ $stmt3->close();
             </p>
             <p>
                 <label for="comment">Comment: </label>
-                <textarea id="comment" name="comment" rows="5" cols="40"></textarea>
+                <textarea id="comment" name="comment" rows="5" cols="40" required></textarea>
             </p>
-            <button type="submit" onclick=>Post</button> | 
+            <button type="submit">Post</button> | 
             <button type="reset">Clear</button>
-        </form>
+        </form>';
+    }
+        ?>
     </div>
     <div class="chart">
         <p>
