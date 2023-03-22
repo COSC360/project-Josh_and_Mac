@@ -65,6 +65,7 @@ $stmt->close();
             <button onclick="location.href = 'editcustomer.php';">Edit</button>
             <button onclick="location.href = 'home.php';">Back</button>
             <button onclick="location.href = 'changepassword.php';">Change Password</button>
+            <button onclick="location.href = 'deleteAccount.php';">Delete Account</button>
 			
 		</div>
 		

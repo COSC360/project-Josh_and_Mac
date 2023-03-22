@@ -1,4 +1,5 @@
 <?php
+// Will need admin flag added!!
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the home page...
@@ -14,7 +15,6 @@ $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_
 if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
-// We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
 $stmt = $con->prepare('SELECT * FROM account');
 // In this case we can use the account ID to get the account info.
 //$stmt->bind_param('i', $_SESSION['id']);
@@ -28,7 +28,7 @@ $stmt->close();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Customer Information</title>
+	<title>Admin</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
@@ -38,7 +38,7 @@ $stmt->close();
     <?php include "navbar.php";?>
 </header>
 <body>
-	<h1>Customer Information</h1>
+	<h1>Admin Portal</h1>
 	<div>
 		<div class="columnleft">
 			<table>
@@ -60,15 +60,13 @@ $stmt->close();
                 <td>'.$row["name"].'</td>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["email"].'</td>
+                <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'">Delete</a></td>
                 </tr>';
             
     }}mysqli_free_result($result);
     ?>
     </table>
-            
-            <button onclick="location.href = 'editcustomer.php';">Edit</button>
             <button onclick="location.href = 'home.php';">Back</button>
-            <button onclick="location.href = 'changepassword.php';">Change Password</button>
 			
 		</div>
 		
