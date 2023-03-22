@@ -85,7 +85,7 @@ $stmt3->close();
                 <th>Comments</th>
             </tr>
             <?php
-            $_SESSION["is_admin"] = true; // added until admin functionality is implemented
+            //$_SESSION["is_admin"] = true; // added until admin functionality is implemented
     if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admin"] === true){
     while($row = $result2->fetch_assoc()) {
         echo '<tr>
@@ -101,6 +101,8 @@ $stmt3->close();
                     <td>'.$row["username"].'</td>
                     <td>'.$row["rating"].'</td>
                     <td>'.$row["comment"].'</td>
+                    ';if($_SESSION["username"] === $row["username"]) echo '<td><a href="deleteComment.php?comid='.$row["comid"].'">Delete Comment</a></td></tr>';
+                    else echo'
                     </tr>';}
     }
     ?>
