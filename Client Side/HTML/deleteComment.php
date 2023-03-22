@@ -7,7 +7,7 @@ $stmt = $con->prepare('DELETE FROM comments WHERE comid = ?');
 // In this case we can use the search to get the account info.
 $comid = $_GET['comid'];
 
-$stmt->bind_param('i', $cid);
+$stmt->bind_param('i', $comid);
 
 //$stmt->execute();
 if($stmt->execute()){
