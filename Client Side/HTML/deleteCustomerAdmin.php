@@ -11,9 +11,6 @@ if($stmt->execute()){
     echo "<h3>Customer account deleted successfully."
         . " Please browse your localhost php my admin"
         . " to view the updated data</h3>";
-
-    echo nl2br("\n$name\n $username\n "
-        . "$store\n $email\n $updates");
 } else{
     echo "ERROR "
         . mysqli_error($con);

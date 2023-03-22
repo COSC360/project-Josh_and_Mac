@@ -10,7 +10,7 @@
          
         // Performing insert query execution
         // here our table name is college
-        $sql = "INSERT INTO accounts (name, username, password, store, email, updates) VALUES ('$name',
+        $sql = "INSERT INTO account (name, username, password, store, email, updates) VALUES ('$name',
             '$username','$password','$store','$email', '$updates')";
          
         if(mysqli_query($con, $sql)){
