@@ -107,8 +107,8 @@ $stmt3->close();
     }
     ?>
     <?php       
-    $_SESSION['logged_in'] = true; // won't work unless specified here?
-    if (isset($_SESSION['logged_in'])){
+    //$_SESSION['loggedin'] = true; // won't work unless specified here?
+    if (isset($_SESSION['loggedin'])){
         echo '<form method="post" action="enterComment.php?search='.$search.'">
             <p>
                 <label for="rating">Rating /5: </label>
