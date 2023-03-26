@@ -1,34 +1,52 @@
 <?php
- include "connectDB.php";
-        // Taking all 5 values from the form data(input)
-        $name =  $_REQUEST['name'];
-        $username = $_REQUEST['username'];
-        $password =  $_REQUEST['password'];
-        $store = $_REQUEST['store'];
-        $email = $_REQUEST['email'];
-        $updates = $_REQUEST['updates'];
-         
-        // Performing insert query execution
-        // here our table name is college
-        $sql = "INSERT INTO account (name, username, password, store, email, updates) VALUES ('$name',
-            '$username','$password','$store','$email', '$updates')";
-         
-        if(mysqli_query($con, $sql)){
-            echo "<h3>data stored in a database successfully."
-                . " Please browse your localhost php my admin"
-                . " to view the updated data</h3>";
- 
-            echo nl2br("\n$name\n $username\n "
-                . "$password\n $store\n $email\n $updates");
-        } else {
-            if(mysqli_errno($con) == 1062) { 
-            
-            } else { 
-                echo "ERROR: Hush! Sorry $sql. "
-                . mysqli_error($con);
-            }
-        }
-         
-        // Close connection
-        mysqli_close($con);
-        ?>
+    session_start();
+    include "connectDB.php";
+    include "checkPOST.php"; 
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    $username = $_POST['username'];
+    $password =  $_POST['password'];
+    $email = $_POST['email']; 
+
+    // Check if username already exists
+    $sql = "SELECT COUNT(*) as count FROM account WHERE username = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $count = $result->fetch_assoc()['count'];
+
+ if($count > 0) {
+    $_SESSION["newuser_msg"] = "User already exists with username: $username";
+    header("Location: login.php");
+    } else if (isset($_POST['updates'])) { 
+        $updates = $_POST['updates'];
+        $sql = "INSERT INTO account (username, password, email, updates) VALUES (?,?,?,?)";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param('ssss', $username, $password, $email, $updates);
+        if($stmt->execute()){ 
+            $_SESSION["newuser_msg"] = "Successfully created account for user: $username";
+            header("Location: login.php");
+        } else { 
+                $_SESSION["newuser_msg"] = $sql." -> ".$con->error; 
+                header("Location: login.php");
+            }    
+    } else { 
+        $sql = "INSERT INTO account (username, password, email) VALUES (?,?,?)";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param('sss', $username, $password, $email);
+        if($stmt->execute()){ 
+            $_SESSION["newuser_msg"] = "Successfully created account for user: $username";
+            header("Location: login.php");
+        } else { 
+                $_SESSION["newuser_msg"] = $sql." -> ".$con->error; 
+                header("Location: login.php");
+            }    
+    } 
+    
+    // Close connection and stmt
+    $con->close();
+    $stmt->close();
+    ?>

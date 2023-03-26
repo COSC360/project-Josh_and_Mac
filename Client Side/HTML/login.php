@@ -8,7 +8,7 @@
     <!-- <script type="text/javascript" src="../script/validation.js"></script> -->
 </head>
 <header>
-   <?php session_start(); include "navbar.php"?>
+   <?php session_start(); include "navbar.php";?>
 </header>
 <body>
 	<h1>Login/Sign Up</h1>
@@ -25,20 +25,17 @@
                         <input type="password" id="password" name="password">
                     </p>
                     <button type="submit">Login</button>
-                    <a href="#" class="btn btn-info" role="button">forgot password?</a>
+                    <!-- <a href="#" class="btn btn-info" role="button">forgot password?</a>-->
                     <?php if(isset($_SESSION["login_error"])) { 
                         echo "<h3>".$_SESSION["login_error"]."</h3>";
-                        unset($_SESSION["login_error"]);}
+                        unset($_SESSION["login_error"]);
+                        }
                     ?>
 			</form>
 		</div>
 		<div class="columnright">
 			<form method="post" action="newuser.php" id="signupForm">
-                    <h2>Create a Free Account</h2>
-                    <p>
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" >
-                    </p>
+                    <h2>Create a Free Account</h2> 
                     <p>
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" >
@@ -48,24 +45,20 @@
                         <input type="password" id="password" name="password" >
                     </p>
                     <p>
-                        <label for="store">Favourite Store</label>
-                        <select name="store" id="store">
-                            <option value="superstore">Superstore</option>
-                            <option value="saveon">Save-On-Foods</option>
-                            <option value="walmart">Walmart</option>
-                            <option value="sobeys">Safeway/Sobeys</option>
-                          </select>
-                    </p>
-                    <p>
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" >
                     </p>
                     <p>
                         <label for="updates">Receive Email Updates?</label>
-                        <input type="checkbox" name="updates" value="yes">
+                        <input type="checkbox" name="updates" value=1>
                     </p>
                     <button type="submit">Register</button>
                     <button type="reset">Clear</button>
+                    <?php if(isset($_SESSION["newuser_msg"])) { 
+                        echo "<h3>".$_SESSION["newuser_msg"]."</h3>";
+                        unset($_SESSION["newuser_msg"]);
+                        }
+                    ?>
 			</form>
         </div> 
         </div>

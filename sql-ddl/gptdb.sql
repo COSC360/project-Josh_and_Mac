@@ -1,0 +1,73 @@
+CREATE TABLE account (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL, 
+  updates BOOLEAN NOT NULL,
+  is_admin BOOLEAN NOT NULL DEFAULT 0
+);
+
+CREATE TABLE chain (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE chain_location (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  chain_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  location VARCHAR(255) NOT NULL,
+  FOREIGN KEY (chain_id) REFERENCES chain(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE product_category (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  description VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE product (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  category_id INT NOT NULL,
+  FOREIGN KEY (category_id) REFERENCES product_category(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE comments (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  account_id INT NOT NULL,
+  product_id INT NOT NULL,
+  comment VARCHAR(100) NOT NULL,
+  rating INT NOT NULL, 
+  FOREIGN KEY (account_id) REFERENCES account(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES product(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE account_basket (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  account_id INT NOT NULL,
+  total_basket_items INT,
+  total_basket_price DECIMAL(9,2), 
+  FOREIGN KEY (account_id) REFERENCES account(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE basket_item (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  account_basket_id INT NOT NULL,
+  product_id INT NOT NULL,
+  quantity INT NOT NULL, 
+  total_item_price DECIMAL(9,2), 
+  FOREIGN KEY (account_basket_id) REFERENCES account_basket(id) ON UPDATE CASCADE ON DELETE CASCADE, 
+  FOREIGN KEY (product_id) REFERENCES product(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE product_price (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  chain_location_id INT NOT NULL,
+  product_id INT NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (chain_location_id) REFERENCES chain_location(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES product(id) ON UPDATE CASCADE ON DELETE CASCADE
+);

@@ -1,6 +1,5 @@
 <?php
-session_start();
-    include "connectDB.php";
+include "connectDB.php";
     
 //if(($_POST["rating"]!==null && $_POST["comment"]!==null)){
 $stmt3 = $con->prepare('INSERT INTO comments (rating, comment, name, username) VALUES ("'.$_REQUEST["rating"].'", "'.$_REQUEST["comment"].'", ?, "'.$_SESSION["username"].'")');

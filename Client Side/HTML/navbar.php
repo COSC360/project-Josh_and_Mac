@@ -1,14 +1,11 @@
 
 <?php
-// Start the session
-//session_start();
-
 // Check if the user is logged in and is an admin
 if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admin"] === true) {
     $links = array(
         array(
-            "name" => "Manage Baskets",
-            "url" => "manageBasket.php"
+            "name" => "Your Basket",
+            "url" => "basket.php"
         ),
         array(
             "name" => "Your Profile",
@@ -26,8 +23,8 @@ if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admi
 } else if (isset($_SESSION["id"])) {
     $links = array(
         array(
-            "name" => "Manage Baskets",
-            "url" => "manageBasket.php"
+            "name" => "Your Basket",
+            "url" => "basket.php"
         ),
         array(
             "name" => "Your Profile",

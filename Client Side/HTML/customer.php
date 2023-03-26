@@ -1,18 +1,10 @@
 <?php
 // We need to use sessions, so you should always start sessions using the below code.
-session_start();
+include "connectDB.php";
 // If the user is not logged in redirect to the home page...
 if (!isset($_SESSION['loggedin'])) {
 	//header('Location: home.html');
 	//exit;
-}
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'gptdb';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-if (mysqli_connect_errno()) {
-	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 // We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
 $stmt = $con->prepare('SELECT username, password, email, store, name, updates FROM account WHERE id = ?');

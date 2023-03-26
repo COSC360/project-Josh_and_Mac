@@ -2,6 +2,7 @@
 session_start();
 // Change this to your connection info.
 include "connectDB.php"; 
+include "checkPOST.php";
 // Now we check if the data from the login form was submitted, isset() will check if the data exists.
 if (!isset($_POST['username'], $_POST['password']) ) {
 	// Could not get the data that should have been sent.
@@ -29,11 +30,12 @@ if ($stmt = $con->prepare('SELECT id, password FROM account WHERE username = ?')
             $_SESSION['loggedin'] = TRUE;
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['id'] = $id;
+            echo "<h1>success</h1>";
             header('Location: home.php');
         } else {
             // Incorrect password
             $_SESSION["login_error"] = "Incorrect password";
-            header('Location: login.php');;
+            header('Location: login.php');
         }
     } else {
         // Incorrect username

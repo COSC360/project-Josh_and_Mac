@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,26 +7,31 @@ session_start();
 	<link rel="stylesheet" href="../css/layout.css"/>
 </head>
 <header>
-        <?php include "navbar.php"; ?>
+        <?php session_start(); include "navbar.php";?>
 </header>
 <body>
     <div>
         <h3>Find a Product</h3>
-            <form method="post" action="browse.php">
+            <form method="get" action="browse.php">
                 <input placeholder="Search for..." type="text" id="search" name="search">
                 <select name="chain" id="chain" required>
                     <option value="" selected disabled hidden>Grocery Store Chain</option>
-                    <option value="superstore">Superstore</option>
                     <option value="saveonfoods">Save-On-Foods</option>
                     <option value="walmart">Walmart</option>
-                    <option value="sobeys">Safeway/Sobeys</option>
+                    <option value="superstore">Superstore</option>
                 </select>
                 <select name="chain_location" id="chain_location" required>
-                    <option value="" selected disabled hidden>Location</option>
+                <option value="" selected disabled hidden>Chain Location</option>
                     <option value="kelowna">Kelowna</option>
-                    <option value="calgary">Calgary</option>
+                    <option value="westkelowna">West Kelowna (WestBank)</option>
                     <option value="vernon">Vernon</option>
-                    <option value="vancouver">Vancouver</option>
+                </select> 
+                <select name="product_category" id="product_category">
+                    <option value="all" selected>All</option>
+                    <option value="fruit">Fruits</option>
+                    <option value="vegetable">Vegetables</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="meat">Meat</option>
                 </select>
                 <button type="submit">Search</button>
             </form>
@@ -49,7 +51,7 @@ session_start();
             Search products and compare across different stores and locations
         </p>
         <p>
-            Get started now! <a href="login.html"> Create a free account</a>
+            Get started now! <a href="login.php"> Create a free account</a>
         </p>
      </div>
      <hr>
@@ -80,8 +82,8 @@ session_start();
     </div>
     <footer>
         <p>
-            <a href="home.html">Home</a> |
-            <a href="browse.html">Browse</a>
+            <a href="home.php">Home</a> |
+            <a href="browse.php">Browse</a>
         </p>
         <p>
             <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>
