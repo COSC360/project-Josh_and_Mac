@@ -9,7 +9,7 @@
 </head>
 <header>
     <div class="flex-container">    
-       <?php include "navbar.php"?>
+       <?php session_start(); include "navbar.php";?>
     </div>
 </header>
 <body>
@@ -22,30 +22,17 @@
                         <input type="text" id="username" name="username">
                     </p>
                     <p>
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name">
-                    </p>
-                    <p>
                         <label for="email">Email: </label>
                         <input type="email" id="email" name="email">
                     </p>
                     <p>
-                    <label for="store">Favourite Store</label>
-                        <select name="store" id="store">
-                            <option value="superstore">Superstore</option>
-                            <option value="saveon">Save-On-Foods</option>
-                            <option value="walmart">Walmart</option>
-                            <option value="sobeys">Safeway/Sobeys</option>
-                          </select>
-                    </p>
-                    <p>
                         <label for="updates">Email Updates: </label>
-                        <input type="checkbox" id="updates" name="updates">
+                        <input type="checkbox" id="updates" name="updates" value=1>
                     </p>
                     <button type="submit">Submit</button>
 			</form>
             <button onclick="location.href = 'customer.php';">Back</button>
-            <button onclick="location.href = 'changepassword.php';">Change Password</button>
+             <!--<button onclick="location.href = 'changepassword.php';">Change Password</button>-->
 
 		</div>
 		
@@ -53,8 +40,8 @@
         </body>
         <footer>
             <p>
-                <a href="home.html">Home</a> |
-                <a href="browse.html">Browse</a>
+                <a href="home.php">Home</a> |
+                <a href="browse.php">Browse</a>
             </p>
             <p>
                 <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>

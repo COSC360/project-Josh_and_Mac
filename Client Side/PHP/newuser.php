@@ -25,7 +25,8 @@
         $updates = $_POST['updates'];
         $sql = "INSERT INTO account (username, password, email, updates) VALUES (?,?,?,?)";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param('ssss', $username, $password, $email, $updates);
+        $hashedPassword = md5($password); 
+        $stmt->bind_param('ssss', $username, $hashedPassword, $email, $updates);
         if($stmt->execute()){ 
             $_SESSION["newuser_msg"] = "Successfully created account for user: $username";
             header("Location: login.php");
@@ -36,7 +37,8 @@
     } else { 
         $sql = "INSERT INTO account (username, password, email) VALUES (?,?,?)";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param('sss', $username, $password, $email);
+        $hashedPassword = md5($password); 
+        $stmt->bind_param('sss', $username, $hashedPassword, $email);
         if($stmt->execute()){ 
             $_SESSION["newuser_msg"] = "Successfully created account for user: $username";
             header("Location: login.php");

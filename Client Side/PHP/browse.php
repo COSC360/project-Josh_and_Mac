@@ -151,7 +151,6 @@ $stmt->close();
                         <div class="cardPrices">Price: $'.$row["product_price"].'</div>
                         <div class="link">
                             <a href="product.php?product_name='.$row["product_name"].'&chain='.$chain.'&chain_location='.$chain_location.'&product_category='.$product_category.'&search='.$search.'">Product Page</a>
-                            <a href="">Basket</a>
                         </div>
                 </div></div>';
             

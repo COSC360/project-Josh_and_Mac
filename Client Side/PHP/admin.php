@@ -2,13 +2,16 @@
 // Will need admin flag added!!
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // If the user is not logged in redirect to the home page...
-if (!isset($_SESSION['loggedin'])) {
-	//header('Location: home.html');
-	//exit;
+if (!isset($_SESSION['loggedin']) | (!($_SESSION['is_admin']))) {
+	header('Location: home.php');
+	exit();
 }
-include "connectDB"; 
 
+include "connectDB.php"; 
 $stmt = $con->prepare('SELECT * FROM account');
 // In this case we can use the account ID to get the account info.
 //$stmt->bind_param('i', $_SESSION['id']);
@@ -32,18 +35,22 @@ $stmt->close();
     <?php include "navbar.php";?>
 </header>
 <body>
-	<h1>Admin Portal</h1>
+	<h1>Admin Portal</h1> 
+    <?php if(isset($_SESSION["admin_msg"])) { 
+        echo "<h3>".$_SESSION["admin_msg"]."</h3>"; 
+        unset($_SESSION["admin_msg"]);
+        }?>
 	<div>
 		<div class="columnleft">
 			<table>
                 <tr>
-                <th>Customer Id</th>
-                <th>Customer Name</th>
-                <th>Username</th>
-                <th>Email</th>
-</tr>
+                    <th>Customer Id</th>
+                    <th>Customer UserName</th>
+                    <th>Email</th>
+                    <th>Email Updates</th>
+                </tr>
 <?php
-            $rowcount = mysqli_num_rows($result);  
+    $rowcount = mysqli_num_rows($result);  
     if(empty($rowcount)){ 
         echo " <div><h3>No Current Customers</h3></div>";
     } else { 
@@ -51,28 +58,25 @@ $stmt->close();
         while($row = $result->fetch_assoc()) {
                 echo '<tr>
                 <td>'.$row["id"].'</td>
-                <td>'.$row["name"].'</td>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["email"].'</td>
+                <td>'.$row["updates"].'</td>
                 <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td>
                 </tr>';
-            
     }}mysqli_free_result($result);
     ?>
-    </table>
+            </table>
             <button onclick="location.href = 'home.php';">Back</button>
-			
 		</div>
-		
-        </div>
-        </body>
-        <footer>
-            <p>
-                <a href="home.php">Home</a> |
-                <a href="browse.php">Browse</a>
-            </p>
-            <p>
-                <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>
-            </p>
-        </footer>
-        </html>
+    </div>
+</body>
+<footer>
+    <p>
+        <a href="home.php">Home</a> |
+        <a href="browse.php">Browse</a>
+    </p>
+    <p>
+        <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>
+    </p>
+</footer>
+</html>

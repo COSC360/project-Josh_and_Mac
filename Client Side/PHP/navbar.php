@@ -4,16 +4,12 @@
 if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admin"] === true) {
     $links = array(
         array(
-            "name" => "Your Basket",
-            "url" => "basket.php"
-        ),
-        array(
             "name" => "Your Profile",
             "url" => "customer.php"
         ),
         array(
             "name" => "Customer Profiles",
-            "url" => "listAllCustomers.php"
+            "url" => "admin.php"
         ), 
         array(
             "name" => "Log Out",
@@ -22,10 +18,6 @@ if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admi
     );
 } else if (isset($_SESSION["id"])) {
     $links = array(
-        array(
-            "name" => "Your Basket",
-            "url" => "basket.php"
-        ),
         array(
             "name" => "Your Profile",
             "url" => "customer.php"

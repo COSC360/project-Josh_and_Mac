@@ -1,17 +1,16 @@
 <?php
-// We need to use sessions, so you should always start sessions using the below code.
+session_start();
 include "connectDB.php";
-// If the user is not logged in redirect to the home page...
+
 if (!isset($_SESSION['loggedin'])) {
-	//header('Location: home.html');
-	//exit;
+	header('Location: home.php');
+	exit;
 }
-// We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
-$stmt = $con->prepare('SELECT username, password, email, store, name, updates FROM account WHERE id = ?');
+$stmt = $con->prepare('SELECT username, email, updates FROM account WHERE id = ?');
 // In this case we can use the account ID to get the account info.
 $stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
-$stmt->bind_result($username, $password, $email, $store, $name, $updates);
+$stmt->bind_result($username, $email, $updates);
 $stmt->fetch();
 $stmt->close();
 ?>
@@ -26,7 +25,14 @@ $stmt->close();
     <script type="text/javascript" src="../script/validation.js"></script>
 </head>
 <header>
-    <?php include "navbar.php";?>
+    <?php include "navbar.php"; 
+    if($updates == 1) { 
+        $updateTitle = "Yes";
+    } else { 
+        $updateTitle = "No";
+    }
+    
+    ?>
 </header>
 <body>
 	<h1>Customer Information</h1>
@@ -38,25 +44,17 @@ $stmt->close();
                     <td><?=$username?></td>
                 </tr>
                 <tr>
-                    <td>Name: </td>
-                    <td><?=$name?></td>
-                </tr>
-                <tr>
                     <td>Email: </td>
                     <td><?=$email?></td>
                 </tr>
                 <tr>
-                    <td>Favorite Store: </td>
-                    <td><?=$store?></td>
-                </tr>
-                <tr>
                     <td>Email Updates: </td>
-                    <td><?=$updates?></td>
+                    <td><?=$updateTitle?></td>
                 </tr>
             </table>
             <button onclick="location.href = 'editcustomer.php';">Edit</button>
             <button onclick="location.href = 'home.php';">Back</button>
-            <button onclick="location.href = 'changepassword.php';">Change Password</button>
+            <!--<button onclick="location.href = 'changepassword.php';">Change Password</button>-->
             <button onclick="location.href = 'deleteAccount.php';">Delete Account</button>
 			
 		</div>

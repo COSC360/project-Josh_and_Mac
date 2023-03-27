@@ -21,7 +21,7 @@ if(isset($_POST) & !empty($_POST)){
     $to = $r['email'];
     $subject = "Your Recovered Password";
     $message = "Please use this password to login " . $password;
-    $headers = "From : admin@gpt.com";
+    $headers = "From : admin@gpt.com";  
 
     $mail->From = "admin@gpt.com"; 
     $mail->FromName = "The Boss"; //To address and name 

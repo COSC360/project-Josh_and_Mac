@@ -33,6 +33,9 @@ $product_name = $_GET["product_name"];
 $chain = $_GET["chain"]; 
 $chain_location = $_GET["chain_location"];
 $product_category = $_GET["product_category"];
+$product_name_url = rawurlencode($product_name);
+$search_url = rawurlencode($search);
+$product_url_query = "?product_name=$product_name_url&chain=$chain&chain_location=$chain_location&product_category=$product_category&search=$search_url";
 
 $stmt->bind_param('sss', $chain, $chain_location, $product_name);
 
@@ -44,27 +47,18 @@ $stmt->fetch();
 
 $stmt->close();
 
-// SELECT * FROM comments WHERE name LIKE ?'
-/*$stmt2 = $con->prepare("");
+
+$stmt2 = $con->prepare("SELECT c.id as commentID, a.username AS username, c.comment AS comment_desc, c.rating AS comment_rating
+    FROM account a
+    JOIN comments c ON c.account_id = a.id
+    JOIN product p ON p.id = c.product_id
+    WHERE p.name = ?");
 // In this case we can use the search to get the comment info.
-$stmt2->bind_param('s', $search);
+$stmt2->bind_param('s', $product_name);
 $stmt2->execute();
 $result2 = $stmt2->get_result();
 
 $stmt2->close();
-
-function insertComment(){
-    include "connectDB.php";
-//if(($_POST["rating"]!==null && $_POST["comment"]!==null)){ 
-// 'INSERT INTO comments (rating, comment, name, username) VALUES ("'.$_POST["rating"].'", "'.$_POST["comment"].'", ?, "'.$_SESSION["username"].'")'
-$stmt3 = $con->prepare("");
-// In this case we can use the search to get the comment info.
-$stmt3->bind_param('s', $search);
-$stmt3->execute();
-
-$stmt3->close();
-//}
-}*/
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +68,7 @@ $stmt3->close();
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
+    <script></script>
 </head>
 <header>
         <?php include "navbar.php"; ?>
@@ -90,16 +85,41 @@ $stmt3->close();
         <div class="card">
             <p><img class="card-img" src=<?=$product_img?>></p>
         </div>
-        <p><form method="post" action="product.php">
+        <p><!-- soon to be implemented  <form method="post" action="product.php">
             <label for="pricealert">set alert price: </label>
             <input type="number" min="0" step="0.01" id="pricealert" name="pricealert">
             <button type="submit">Submit</button>
-        </form></p>
+        </form>--></p>
         <p> 
-        <button onclick="location.href = 'browse.php';">add to basket</button>
+        <!-- <button onclick="location.href = 'browse.php';">add to basket</button>-->
         <button onclick="location.href = 'browse.php?search=<?=$search?>&chain=<?=$chain?>&chain_location=<?=$chain_location?>&product_category=<?=$product_category?>';">back to browse</button>
         </p>
     </figure>
+    <div> 
+        <h4>Add a Comment:</h4>
+        <?php       
+            if (isset($_SESSION['loggedin'])){
+                    echo '<form method="post" action="enterComment.php?product_id='.$product_id.'&account_id='.$_SESSION["id"].'">
+                        <p>
+                            <input type="hidden" id="productURL" name="productURL" value="'.$product_url_query.'">
+                            <label for="rating">Rating /5: </label>
+                            <select name="rating" id="rating" required>
+                                <option value=1>1 star</option>
+                                <option value=2>2 star</option>
+                                <option value=3>3 star</option>
+                                <option value=4>4 star</option>
+                                <option value=5>5 star</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label for="comment">Comment: </label>
+                            <textarea id="comment" name="comment" rows="5" cols="40" required></textarea>
+                        </p>
+                        <button type="submit">Post</button> | 
+                        <button type="reset">Clear</button>
+                    </form>';
+                }?>
+    </div>
     <div class = "comments">
         <h4>Comments:</h4>
         <table>
@@ -114,44 +134,28 @@ $stmt3->close();
     while($row = $result2->fetch_assoc()) {
         echo '<tr>
                 <td>'.$row["username"].'</td>
-                <td>'.$row["rating"].'</td>
-                <td>'.$row["comment"].'</td>
-                <td><a href="deleteComment.php?comid='.$row["comid"].'">Delete Comment</a></td>
-                </tr>';}
+                <td>'.$row["comment_rating"].'</td>
+                <td>'.$row["comment_desc"].'</td>
+                <td><form method="post" action="deleteComment.php"> 
+                <input type="hidden" id="commentID" name="commentID" value="'.$row["commentID"].'"> 
+                <input type="hidden" id="productURL" name="productURL" value="'.$product_url_query.'">
+                <button type="submit">Delete Comment</button>
+                </form></td></tr>';}
     }
     else{
         while($row = $result2->fetch_assoc()) {
             echo '<tr>
                     <td>'.$row["username"].'</td>
-                    <td>'.$row["rating"].'</td>
-                    <td>'.$row["comment"].'</td>
-                    ';if($_SESSION["username"] === $row["username"]) echo '<td><a href="deleteComment.php?comid='.$row["comid"].'">Delete Comment</a></td></tr>';
+                    <td>'.$row["comment_rating"].'</td>
+                    <td>'.$row["comment_desc"].'</td>
+                    ';if($_SESSION["username"] === $row["username"]) echo '<td><form method="post" action="deleteComment.php"> 
+                    <input type="hidden" id="commentID" name="commentID" value="'.$row["commentID"].'"> 
+                    <input type="hidden" id="productURL" name="productURL" value="'.$product_url_query.'">
+                    <button type="submit">Delete Comment</button>
+                    </form></td></tr>';
                     else echo'
                     </tr>';}
     }
     ?>
-    <?php       
-    //$_SESSION['loggedin'] = true; // won't work unless specified here?
-    if (isset($_SESSION['loggedin'])){
-        echo '<form method="post" action="enterComment.php?search='.$search.'">
-            <p>
-                <label for="rating">Rating /5: </label>
-                <select name="rating" id="rating" required>
-                    <option value="1">1 star</option>
-                    <option value="2">2 star</option>
-                    <option value="3">3 star</option>
-                    <option value="4">4 star</option>
-                    <option value="5">5 star</option>
-                </select>
-            </p>
-            <p>
-                <label for="comment">Comment: </label>
-                <textarea id="comment" name="comment" rows="5" cols="40" required></textarea>
-            </p>
-            <button type="submit">Post</button> | 
-            <button type="reset">Clear</button>
-        </form>';
-    }
-        ?>
     </div>
 </body>

@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
-    <!-- <script type="text/javascript" src="../script/validation.js"></script> -->
+    <script type="text/javascript" src="../script/loginValidation.js"></script>
 </head>
 <header>
    <?php session_start(); include "navbar.php";?>
@@ -46,7 +46,7 @@
                     </p>
                     <p>
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" >
+                        <input type="email" id="email" name="email">
                     </p>
                     <p>
                         <label for="updates">Receive Email Updates?</label>
@@ -65,8 +65,8 @@
         </body>
         <footer>
             <p>
-                <a href="home.html">Home</a> |
-                <a href="browse.html">Browse</a>
+                <a href="home.php">Home</a> |
+                <a href="browse.php">Browse</a>
             </p>
             <p>
                 <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>
