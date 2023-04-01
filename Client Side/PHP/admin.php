@@ -6,10 +6,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // If the user is not logged in redirect to the home page...
-if (!isset($_SESSION['loggedin']) | (!($_SESSION['is_admin']))) {
-	header('Location: home.php');
-	exit();
-}
+// if (!isset($_SESSION['loggedin']) | (!($_SESSION['is_admin']))) {
+// 	header('Location: home.php');
+// 	exit();
+// }
 
 include "connectDB.php"; 
 $stmt = $con->prepare('SELECT * FROM account');
@@ -20,6 +20,11 @@ $stmt->execute();
 // $stmt->fetch();
 $result = $stmt->get_result();
 $stmt->close();
+
+$stmt2 = $con->prepare('SELECT * FROM product');
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+$stmt2->close();
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +46,7 @@ $stmt->close();
         unset($_SESSION["admin_msg"]);
         }?>
 	<div>
-		<div class="columnleft">
+		<div>
 			<table>
                 <tr>
                     <th>Customer Id</th>
@@ -50,20 +55,57 @@ $stmt->close();
                     <th>Email Updates</th>
                 </tr>
 <?php
+    $count=0;
     $rowcount = mysqli_num_rows($result);  
     if(empty($rowcount)){ 
         echo " <div><h3>No Current Customers</h3></div>";
     } else { 
         echo"<div><h3>Current Customer List:</h3></div>";
         while($row = $result->fetch_assoc()) {
-                echo '<tr>
+            if($count % 2)echo '<tr class="evenRow">';
+            else echo '<tr class="oddRow">';
+             echo '
                 <td>'.$row["id"].'</td>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["email"].'</td>
                 <td>'.$row["updates"].'</td>
                 <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td>
                 </tr>';
+                $count = $count + 1;
     }}mysqli_free_result($result);
+    ?>
+            </table>
+            <button onclick="location.href = 'home.php';">Back</button>
+		</div>
+    </div>
+    <div>
+		<div>
+			<table>
+                <tr>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Current Price</th>
+                </tr>
+<?php
+    $count=0;
+    $rowcount = mysqli_num_rows($result2);  
+    if(empty($rowcount)){ 
+        echo " <div><h3>No Current Products</h3></div>";
+    } else { 
+        echo"<div><h3>Current Product List:</h3></div>";
+        while($row = $result2->fetch_assoc()) {
+                if($count % 2)echo '<tr class="evenRow">';
+                else echo '<tr class="oddRow">';
+                echo'
+                <td>'.$row["id"].'</td>
+                <td>'.$row["name"].'</td>
+                <td>'.$row["description"].'</td>
+                <td></td>
+                <td><a href="editProduct.php?product_id='.$row["id"].'">Update</a></td>
+                </tr>';
+                $count = $count + 1;
+    }}mysqli_free_result($result2);
     ?>
             </table>
             <button onclick="location.href = 'home.php';">Back</button>

@@ -26,7 +26,7 @@ header, footer{
     background-color: #DDDDDD;
     clear:both;
 }
-button{
+button, .button{
     color: black;
     background-color: #b7b78a;
     border: none;
@@ -108,4 +108,12 @@ footer {
     overflow: auto;
     max-height: 25vh;
     max-width: 50vh;
+ }
+ 
+ .evenRow{
+    background-color: white;
+ }
+
+ .oddRow{
+    background-color: lightgrey;
  }
