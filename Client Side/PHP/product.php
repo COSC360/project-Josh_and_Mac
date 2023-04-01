@@ -81,8 +81,8 @@ $stmt2->close();
         <p id="description">Description: <?=$product_desc?></p>
         <p id="price">Latest Price: $<?=$product_latest_price?></p>
     </div>
-    <figure class="productfig">
-        <div class="card">
+    <figure class="productfig" class="">
+        <div class="card" id="prodcard">
             <p><img class="card-img" src=<?=$product_img?>></p>
         </div>
         <p><!-- soon to be implemented  <form method="post" action="product.php">
@@ -90,12 +90,13 @@ $stmt2->close();
             <input type="number" min="0" step="0.01" id="pricealert" name="pricealert">
             <button type="submit">Submit</button>
         </form>--></p>
-        <p> 
+        
         <!-- <button onclick="location.href = 'browse.php';">add to basket</button>-->
-        <button onclick="location.href = 'browse.php?search=<?=$search?>&chain=<?=$chain?>&chain_location=<?=$chain_location?>&product_category=<?=$product_category?>';">back to browse</button>
-        </p>
+        <button id="button"onclick="location.href = 'browse.php?search=<?=$search?>&chain=<?=$chain?>&chain_location=<?=$chain_location?>&product_category=<?=$product_category?>';">back to browse</button>
+        
     </figure>
-    <div> 
+    
+    <div class="right"> 
         <h4>Add a Comment:</h4>
         <?php       
             if (isset($_SESSION['loggedin'])){
@@ -159,3 +160,4 @@ $stmt2->close();
     ?>
     </div>
 </body>
+</html>

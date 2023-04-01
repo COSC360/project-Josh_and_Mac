@@ -109,3 +109,12 @@ footer {
     max-height: 25vh;
     max-width: 50vh;
  }
+
+ #prodinfo{
+    background-color: #b7b78a;
+ }
+ 
+ #prodcard{
+   
+    float:none;
+ }
