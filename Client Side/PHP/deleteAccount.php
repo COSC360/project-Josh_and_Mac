@@ -5,7 +5,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["loggedin"]) && ($_SESSION["logged
     $stmt = $con->prepare('DELETE FROM account WHERE id = ?');
     // In this case we can use the search to get the account info.
     $cid = $_SESSION['id'];
-    $username = $_SESSION['name'];
+    $username = $_SESSION['username'];
     $stmt->bind_param('i', $cid);
     //$stmt->execute();
     if($stmt->execute()){

@@ -20,14 +20,15 @@ if(isset($_POST) & !empty($_POST)){
       $subject = "Your Recovered Password";
       $message = "Please use this password to login " . $password;
       $headers = "From : admin@gpt.com";
+
         try{
             // Server settings
             $mail->SMTPDebug = 2;                      // Enable verbose debug output
             $mail->isSMTP();                                            // Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-            $mail->Username   = 'yourname@gmail.com';                     // SMTP username  tried with my gmail credentials but authentication failed.
-            $mail->Password   = 'password';                               // SMTP password
+            $mail->Username   = 'donnytheboss3@gmail.com';                     // SMTP username  tried with my gmail credentials but authentication failed.
+            $mail->Password   = 'theBoss123';                               // SMTP password
             $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
             // Recipients

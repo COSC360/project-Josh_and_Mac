@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `account`
 --
+CREATE DATABASE gptdb2;
+USE gptdb2;
+
 
 CREATE TABLE `account` (
   `id` int(11) NOT NULL,
