@@ -6,6 +6,8 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: home.php');
 	exit;
 }
+$id = $_SESSION['id'];
+
 $stmt = $con->prepare('SELECT username, email, updates FROM account WHERE id = ?');
 // In this case we can use the account ID to get the account info.
 $stmt->bind_param('i', $_SESSION['id']);
@@ -13,6 +15,20 @@ $stmt->execute();
 $stmt->bind_result($username, $email, $updates);
 $stmt->fetch();
 $stmt->close();
+
+$sql = "SELECT filename, filedata FROM account WHERE id= $id";
+$result = $con->query($sql);
+
+// if ($result->num_rows > 0) {
+//     // Output the image data
+//     $row = $result->fetch_assoc();
+//     $filename = $row["filename"];
+//     $filedata = $row["filedata"];
+//     $mime = mime_content_type($filename);
+//     echo "<img src='data:$mime;base64," . base64_encode($filedata) . "' alt='$filename'>";
+// } else {
+//     echo "No image found for id $id.";
+// }
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +54,22 @@ $stmt->close();
 	<h1>Customer Information</h1>
 	<div>
 		<div class="columnleft">
+            <?php
+        if ($result->num_rows > 0) {
+    // Output the image data
+    $row = $result->fetch_assoc();
+    $filename = $row["filename"];
+    $filedata = $row["filedata"];
+    if($filedata!=null){
+   echo '<img src="data:image/jpeg;base64,'.base64_encode($filedata).'"/>';
+   echo "<a href='uploadimg.html'>Change Profile Picture</a>";
+    }
+ else {
+    //echo "No image found for id $id.";
+    echo "<a href='uploadimg.html'>Add Profile Picture</a>";
+}
+        }
+?>
 			<table>
                 <tr>
                     <td>Username: </td>
@@ -54,7 +86,7 @@ $stmt->close();
             </table>
             <button onclick="location.href = 'editcustomer.php';">Edit</button>
             <button onclick="location.href = 'home.php';">Back</button>
-            <!--<button onclick="location.href = 'changepassword.php';">Change Password</button>-->
+            <button onclick="location.href = 'changepassword.php';">Change Password</button>
             <button onclick="location.href = 'deleteAccount.php';">Delete Account</button>
 			
 		</div>
