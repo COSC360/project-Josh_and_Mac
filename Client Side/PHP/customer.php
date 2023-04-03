@@ -60,10 +60,15 @@ $result = $con->query($sql);
     $row = $result->fetch_assoc();
     $filename = $row["filename"];
     $filedata = $row["filedata"];
+    if($filedata!=null){
    echo '<img src="data:image/jpeg;base64,'.base64_encode($filedata).'"/>';
-} else {
-    echo "No image found for id $id.";
+   echo "<a href='uploadimg.html'>Change Profile Picture</a>";
+    }
+ else {
+    //echo "No image found for id $id.";
+    echo "<a href='uploadimg.html'>Add Profile Picture</a>";
 }
+        }
 ?>
 			<table>
                 <tr>
@@ -81,7 +86,7 @@ $result = $con->query($sql);
             </table>
             <button onclick="location.href = 'editcustomer.php';">Edit</button>
             <button onclick="location.href = 'home.php';">Back</button>
-            <!--<button onclick="location.href = 'changepassword.php';">Change Password</button>-->
+            <button onclick="location.href = 'changepassword.php';">Change Password</button>
             <button onclick="location.href = 'deleteAccount.php';">Delete Account</button>
 			
 		</div>
