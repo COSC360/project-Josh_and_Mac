@@ -16,9 +16,38 @@ if(mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
     $product_id = $row["id"];
     $product_name = $row["name"];
+    $img1 = $row["imgsrc"];
 } else {
     //echo "No products found";
 }
+
+// Execute the SQL statement to obtain product_id for most commented prodcut
+$sql2 = $sql = "SELECT product_id, COUNT(comment) AS comment_count FROM comments GROUP BY product_id ORDER BY comment_count DESC";
+$result2 = mysqli_query($con, $sql2);
+$product_name_comment = NULL;
+// Check if the query was successful or not
+if(mysqli_num_rows($result2) > 0) {
+    // Print the product ID with the highest number of comments
+    $row = mysqli_fetch_assoc($result2);
+    $comment_pid = $row["product_id"];
+
+    $sql3 = "SELECT * FROM product WHERE id = $comment_pid";
+    $result3 = mysqli_query($con, $sql3);
+
+    // Check if the query was successful or not
+    if(mysqli_num_rows($result3) > 0) {
+        // Print the first row of the result set
+        $row = mysqli_fetch_assoc($result3);
+        $product_id_comment= $row["id"];
+        $product_name_comment = $row["name"];
+        $img_comment = $row["imgsrc"];
+    } else {
+        //echo "No products found";
+    }
+} else {
+    echo "No comments found";
+}
+
 // Close the database connection
 mysqli_close($con);
 
@@ -96,8 +125,8 @@ mysqli_close($con);
         <h4>Most Popular Product!</h4>
         <p><?php echo '<div class="col">
                     <div class="card">
-                        <h5>'.$row["name"].'</h5>
-                        <img class="card-img" src='.$row["imgsrc"].'>
+                        <h5>'.$product_name.'</h5>
+                        <img class="card-img" src='.$img1.'>
                 </div>
                 </div>'; ?></p>
         </div>
@@ -107,7 +136,15 @@ mysqli_close($con);
      </div>
      <div class="right">
         <h4>Most Comments!</h4>
-        <p>Bananas $0.87</p>
+        <p><?php if($product_name_comment != NULL){
+            echo '<div class="col">
+                    <div class="card">
+                        <h5>'.$product_name_comment.'</h5>
+                        <img class="card-img" src='.$img_comment.'>
+                </div>
+                </div>';}
+                else
+                    echo 'No comments yet!'; ?></p></p>
     </div>
     </div>
     </div>
