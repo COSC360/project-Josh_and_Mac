@@ -63,6 +63,7 @@ mysqli_close($con);
 </head>
 <header>
         <?php include "navbar.php";?>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </header>
 <body>
     <div>
@@ -132,7 +133,49 @@ mysqli_close($con);
         </div>
         <div class="centre">
         <h4>Biggest Price Drop!</h4>
-        <p>Green Beans $0.55</p>
+        <p>	<canvas id="scatterPlot"></canvas>
+	<script>
+		// Define the data for the scatter plot
+        // Use this template and fill the x,y data with price/timestamp and apply for each product displayed!
+		var data = {
+			datasets: [{
+				label: 'Product Price',
+				data: [
+					{ x: 10, y: 20 },
+					{ x: 20, y: 30 },
+					{ x: 30, y: 40 },
+					{ x: 40, y: 50 },
+					{ x: 50, y: 60 }
+				]
+			}]
+		};
+		
+		// Get the canvas element and context
+		var canvas = document.getElementById("scatterPlot");
+		var ctx = canvas.getContext("2d");
+		
+		// Create the scatter plot
+		var scatterPlot = new Chart(ctx, {
+			type: 'scatter',
+			data: data,
+			options: {
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Price ($)'
+						}
+					}]
+				}
+			}
+		});
+	</script></p>
      </div>
      <div class="right">
         <h4>Most Comments!</h4>
