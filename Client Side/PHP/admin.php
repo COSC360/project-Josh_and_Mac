@@ -5,11 +5,11 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-// If the user is not logged in redirect to the home page...
-// if (!isset($_SESSION['loggedin']) | (!($_SESSION['is_admin']))) {
-// 	header('Location: home.php');
-// 	exit();
-// }
+//If the user is not logged in admin redirect to the home page...
+if (!isset($_SESSION['loggedin']) | (!($_SESSION['is_admin']))) {
+	header('Location: home.php');
+	exit();
+}
 
 include "connectDB.php"; 
 $stmt = $con->prepare('SELECT * FROM account');

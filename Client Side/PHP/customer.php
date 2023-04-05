@@ -92,6 +92,11 @@ $result = $con->query($sql);
 		</div>
 		
         </div>
+        <?php if(isset($_SESSION["changePass_msg"])) { 
+                        echo "<h3>".$_SESSION["changePass_msg"]."</h3>";
+                        unset($_SESSION["changePass_msg"]);
+                        }
+                    ?>
         </body>
         <footer>
             <p>

@@ -23,3 +23,4 @@ else echo "Not logged in";
  
 $stmt->close();
 mysqli_close($con);
+?>
