@@ -8,7 +8,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admi
             "url" => "customer.php"
         ),
         array(
-            "name" => "Customer Profiles",
+            "name" => "Admin Portal",
             "url" => "admin.php"
         ), 
         array(
