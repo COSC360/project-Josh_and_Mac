@@ -1,3 +1,29 @@
+<?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include "connectDB.php"; 
+
+
+// Execute the SQL statement
+$sql = "SELECT * FROM product ORDER BY search_count DESC LIMIT 1";
+$result = mysqli_query($con, $sql);
+
+// Check if the query was successful or not
+if(mysqli_num_rows($result) > 0) {
+    // Print the first row of the result set
+    $row = mysqli_fetch_assoc($result);
+    $product_id = $row["id"];
+    $product_name = $row["name"];
+} else {
+    //echo "No products found";
+}
+// Close the database connection
+mysqli_close($con);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +33,7 @@
 	<link rel="stylesheet" href="../css/layout.css"/>
 </head>
 <header>
-        <?php session_start(); include "navbar.php";?>
+        <?php include "navbar.php";?>
 </header>
 <body>
     <div>
@@ -67,8 +93,13 @@
         </div>
      </div>
         <div class="left">
-        <h4>Top Product!</h4>
-        <p>Gala Apples $1.35</p>
+        <h4>Most Popular Product!</h4>
+        <p><?php echo '<div class="col">
+                    <div class="card">
+                        <h5>'.$row["name"].'</h5>
+                        <img class="card-img" src='.$row["imgsrc"].'>
+                </div>
+                </div>'; ?></p>
         </div>
         <div class="centre">
         <h4>Biggest Price Drop!</h4>

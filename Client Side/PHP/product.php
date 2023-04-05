@@ -11,6 +11,7 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 include "connectDB.php"; 
+include "incrementSearchCount.php";
 
 $stmt = $con->prepare("SELECT p.id AS product_id, pc.name AS product_category, p.imgsrc AS product_img, pp.price AS product_price, p.description AS product_desc
         FROM product p
@@ -46,7 +47,8 @@ $stmt->bind_result($product_id, $product_exact_category, $product_img, $product_
 $stmt->fetch();
 
 $stmt->close();
-
+// increment the search count when user has selected this product
+incrementSearchCount($product_name);
 
 $stmt2 = $con->prepare("SELECT c.id as commentID, a.username AS username, c.comment AS comment_desc, c.rating AS comment_rating
     FROM account a
