@@ -22,16 +22,31 @@ $result = $stmt->get_result();
 $stmt->close();
 
 if(isset($_GET['search']) && isset($_GET['search_type'])){
-    $search = $_GET['search'];
-    $sanatizedSearch = '%'.trim($search).'%';
-    $stmt3 = $con->prepare('SELECT * FROM account WHERE username LIKE ?');
-    // In this case we can use the account ID to get the account info.
-    $stmt3->bind_param('s', $sanatizedSearch);
-    $stmt3->execute();
-    //$stmt->bind_result($username, $password, $email, $store, $name, $updates);
-    // $stmt->fetch();
-    $result3 = $stmt3->get_result();
-    $stmt3->close();
+    $searchType=$_GET['search_type'];
+    if($searchType=="username"){
+        $search = $_GET['search'];
+        $sanatizedSearch = '%'.trim($search).'%';
+        $stmt3 = $con->prepare('SELECT * FROM account WHERE username LIKE ?');
+        // In this case we can use the account ID to get the account info.
+        $stmt3->bind_param('s', $sanatizedSearch);
+        $stmt3->execute();
+        //$stmt->bind_result($username, $password, $email, $store, $name, $updates);
+        // $stmt->fetch();
+        $result3 = $stmt3->get_result();
+        $stmt3->close();
+}
+    else{
+        $search = $_GET['search'];
+        $sanatizedSearch = '%'.trim($search).'%';
+        $stmt3 = $con->prepare('SELECT * FROM account WHERE email LIKE ?');
+        // In this case we can use the account ID to get the account info.
+        $stmt3->bind_param('s', $sanatizedSearch);
+        $stmt3->execute();
+        //$stmt->bind_result($username, $password, $email, $store, $name, $updates);
+        // $stmt->fetch();
+        $result3 = $stmt3->get_result();
+        $stmt3->close();
+    }
 }
 
 $stmt2 = $con->prepare('SELECT * FROM product');
@@ -62,9 +77,9 @@ $stmt2->close();
 		<div><div>
         <h3>Search for Customer</h3>
             <form method="get" action="admin.php">
-                <input placeholder="Search for..." type="text" id="search" name="search" required>
-                <select name="search_type" id="search_type" required>
-                    <option value="username" selected>username</option>
+                <input placeholder="Search for..." type="text" id="search" name="search">
+                <select name="search_type" id="search_type">
+                    <option value="username">username</option>
                     <option value="email">Email</option>
                 </select>
                 <button type="submit">Search</button>
