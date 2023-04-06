@@ -54,7 +54,7 @@ $stmt2 = $con->prepare("SELECT c.id as commentID, a.username AS username, c.comm
     FROM account a
     JOIN comments c ON c.account_id = a.id
     JOIN product p ON p.id = c.product_id
-    WHERE p.name = ?");
+    WHERE p.name = ? LIMIT 2");
 // In this case we can use the search to get the comment info.
 $stmt2->bind_param('s', $product_name);
 $stmt2->execute();
@@ -70,7 +70,21 @@ $stmt2->close();
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
-    <script></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script>
+        //jQuery code for AJAX
+        $(document).ready(function(){
+            var commentCount = 2;
+            $("#btn").click(function(){
+                commentCount = commentCount + 2;
+                $("#comments").load("load-comments.php", {
+                    commentNewCount: commentCount,
+                    product_name: "<?php echo $product_name; ?>",
+                    product_url_query: "<?php echo $product_url_query; ?>"              
+                 }); 
+            });
+        }); 
+    </script>
 </head>
 <header>
         <?php include "navbar.php"; ?>
@@ -123,16 +137,17 @@ $stmt2->close();
                 }?>
     </div>
     <div class = "comments">
-        <h4>Comments:</h4>
-        <table>
-            <tr>
-                <th>Username</th>
-                <th>Rating</th>
-                <th>Comments</th>
-            </tr>
+            <div id="comments">
             <?php
-            //$_SESSION["is_admin"] = true; // added until admin functionality is implemented
    if (isset($_SESSION["id"]) && isset($_SESSION["is_admin"]) && $_SESSION["is_admin"] === true){
+    echo "<h4>Comments:</h4>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Rating</th>
+            <th>Comments</th>
+        </tr>";
+        if (mysqli_num_rows($result2)>0){
     while($row = $result2->fetch_assoc()) {
         echo '<tr>
                 <td>'.$row["username"].'</td>
@@ -144,7 +159,17 @@ $stmt2->close();
                 <button type="submit">Delete Comment</button>
                 </form></td></tr>';}
     }
+    else echo "no comments";
+}
     else{
+        echo "<h4>Comments:</h4>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Rating</th>
+            <th>Comments</th>
+        </tr>";
+        if (mysqli_num_rows($result2)>0){
         while($row = $result2->fetch_assoc()) {
             echo '<tr>
                     <td>'.$row["username"].'</td>
@@ -158,6 +183,12 @@ $stmt2->close();
                     else echo'
                     </tr>';}
     }
+    else
+    echo "no comments";
+}
     ?>
+    </table>
     </div>
+    </div>
+    <button id="btn">Show more comments</button>
 </body>
