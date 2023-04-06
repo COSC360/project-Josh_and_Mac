@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Tests::testDatabaseConnection":7,"Tests::testDeleteAccount":8,"Tests::testDatabaseConnection2":8,"Tests::testDataBaseConnection2":8},"times":{"Tests::testDatabaseConnection":0.003,"Tests::testDeleteAccount":0.014,"Tests::testExample":0.004,"Tests::testDatabaseConnection2":0.01,"Tests::testDataBaseConnection2":0.033}}
