@@ -33,6 +33,8 @@ class Tests extends TestCase
     public function testDataBaseConnection2(){
         $result = connectToDatabase(); 
        $this->assertEquals($result->connect_errno, 0);
+       $this->assertEquals($result->connect_error, 0);
+       $this->assertEquals($result->error, null);
     }
     
     
