@@ -36,6 +36,7 @@ $file_data = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
 $stmt->bind_param("ssi", $target_file, $file_data, $id);
 if ($stmt->execute()) {
     echo "The file " . htmlspecialchars($target_file) . " has been uploaded to the database.";
+    header("Location: customer.php");
 } else {
     echo "Sorry, there was an error uploading your file to the database.";
 }

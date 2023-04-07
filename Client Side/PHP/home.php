@@ -1,3 +1,58 @@
+<?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include "connectDB.php"; 
+
+
+// Execute the SQL statement
+$sql = "SELECT * FROM product ORDER BY search_count DESC LIMIT 1";
+$result = mysqli_query($con, $sql);
+
+// Check if the query was successful or not
+if(mysqli_num_rows($result) > 0) {
+    // Print the first row of the result set
+    $row = mysqli_fetch_assoc($result);
+    $product_id = $row["id"];
+    $product_name = $row["name"];
+    $img1 = $row["imgsrc"];
+} else {
+    //echo "No products found";
+}
+
+// Execute the SQL statement to obtain product_id for most commented prodcut
+$sql2 = $sql = "SELECT product_id, COUNT(comment) AS comment_count FROM comments GROUP BY product_id ORDER BY comment_count DESC";
+$result2 = mysqli_query($con, $sql2);
+$product_name_comment = NULL;
+// Check if the query was successful or not
+if(mysqli_num_rows($result2) > 0) {
+    // Print the product ID with the highest number of comments
+    $row = mysqli_fetch_assoc($result2);
+    $comment_pid = $row["product_id"];
+
+    $sql3 = "SELECT * FROM product WHERE id = $comment_pid";
+    $result3 = mysqli_query($con, $sql3);
+
+    // Check if the query was successful or not
+    if(mysqli_num_rows($result3) > 0) {
+        // Print the first row of the result set
+        $row = mysqli_fetch_assoc($result3);
+        $product_id_comment= $row["id"];
+        $product_name_comment = $row["name"];
+        $img_comment = $row["imgsrc"];
+    } else {
+        //echo "No products found";
+    }
+} else {
+    echo "No comments found";
+}
+
+// Close the database connection
+mysqli_close($con);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +62,8 @@
 	<link rel="stylesheet" href="../css/layout.css"/>
 </head>
 <header>
-        <?php session_start(); include "navbar.php";?>
+        <?php include "navbar.php";?>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </header>
 <body>
     <div>
@@ -67,16 +123,71 @@
         </div>
      </div>
         <div class="left">
-        <h4>Top Product!</h4>
-        <p>Gala Apples $1.35</p>
+        <h4>Most Popular Product!</h4>
+        <p><?php echo '<div class="col">
+                    <div class="card">
+                        <h5>'.$product_name.'</h5>
+                        <img class="card-img" src='.$img1.'>
+                </div>
+                </div>'; ?></p>
         </div>
         <div class="centre">
         <h4>Biggest Price Drop!</h4>
-        <p>Green Beans $0.55</p>
+        <p>	<canvas id="scatterPlot"></canvas>
+	<script>
+		// Define the data for the scatter plot
+        // Use this template and fill the x,y data with price/timestamp and apply for each product displayed!
+		var data = {
+			datasets: [{
+				label: 'Product Price',
+				data: [
+					{ x: 10, y: 20 },
+					{ x: 20, y: 30 },
+					{ x: 30, y: 40 },
+					{ x: 40, y: 50 },
+					{ x: 50, y: 60 }
+				]
+			}]
+		};
+		
+		// Get the canvas element and context
+		var canvas = document.getElementById("scatterPlot");
+		var ctx = canvas.getContext("2d");
+		
+		// Create the scatter plot
+		var scatterPlot = new Chart(ctx, {
+			type: 'scatter',
+			data: data,
+			options: {
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Price ($)'
+						}
+					}]
+				}
+			}
+		});
+	</script></p>
      </div>
      <div class="right">
         <h4>Most Comments!</h4>
-        <p>Bananas $0.87</p>
+        <p><?php if($product_name_comment != NULL){
+            echo '<div class="col">
+                    <div class="card">
+                        <h5>'.$product_name_comment.'</h5>
+                        <img class="card-img" src='.$img_comment.'>
+                </div>
+                </div>';}
+                else
+                    echo 'No comments yet!'; ?></p></p>
     </div>
     </div>
     </div>

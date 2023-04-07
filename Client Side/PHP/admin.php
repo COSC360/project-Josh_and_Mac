@@ -5,11 +5,11 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-// If the user is not logged in redirect to the home page...
-// if (!isset($_SESSION['loggedin']) | (!($_SESSION['is_admin']))) {
-// 	header('Location: home.php');
-// 	exit();
-// }
+//If the user is not logged in admin redirect to the home page...
+if (!isset($_SESSION['loggedin']) | (!($_SESSION['is_admin']))) {
+	header('Location: home.php');
+	exit();
+}
 
 include "connectDB.php"; 
 $stmt = $con->prepare('SELECT * FROM account');
@@ -20,6 +20,34 @@ $stmt->execute();
 // $stmt->fetch();
 $result = $stmt->get_result();
 $stmt->close();
+
+if(isset($_GET['search']) && isset($_GET['search_type'])){
+    $searchType=$_GET['search_type'];
+    if($searchType=="username"){
+        $search = $_GET['search'];
+        $sanatizedSearch = '%'.trim($search).'%';
+        $stmt3 = $con->prepare('SELECT * FROM account WHERE username LIKE ?');
+        // In this case we can use the account ID to get the account info.
+        $stmt3->bind_param('s', $sanatizedSearch);
+        $stmt3->execute();
+        //$stmt->bind_result($username, $password, $email, $store, $name, $updates);
+        // $stmt->fetch();
+        $result3 = $stmt3->get_result();
+        $stmt3->close();
+}
+    else{
+        $search = $_GET['search'];
+        $sanatizedSearch = '%'.trim($search).'%';
+        $stmt3 = $con->prepare('SELECT * FROM account WHERE email LIKE ?');
+        // In this case we can use the account ID to get the account info.
+        $stmt3->bind_param('s', $sanatizedSearch);
+        $stmt3->execute();
+        //$stmt->bind_result($username, $password, $email, $store, $name, $updates);
+        // $stmt->fetch();
+        $result3 = $stmt3->get_result();
+        $stmt3->close();
+    }
+}
 
 $stmt2 = $con->prepare('SELECT * FROM product');
 $stmt2->execute();
@@ -46,7 +74,16 @@ $stmt2->close();
         unset($_SESSION["admin_msg"]);
         }?>
 	<div>
-		<div>
+		<div><div>
+        <h3>Search for Customer</h3>
+            <form method="get" action="admin.php">
+                <input placeholder="Search for..." type="text" id="search" name="search">
+                <select name="search_type" id="search_type">
+                    <option value="username">username</option>
+                    <option value="email">Email</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
 			<table>
                 <tr>
                     <th>Customer Id</th>
@@ -55,6 +92,7 @@ $stmt2->close();
                     <th>Email Updates</th>
                 </tr>
 <?php
+    if(!isset($_GET['search'])){
     $count=0;
     $rowcount = mysqli_num_rows($result);  
     if(empty($rowcount)){ 
@@ -67,11 +105,38 @@ $stmt2->close();
             echo '
                 <td>'.$row["id"].'</td>
                 <td>'.$row["username"].'</td>
-                <td>'.$row["email"].'</td>'; 
-            echo ($row["updates"] == 1) ? '<td>Yes</td>' : '<td>No</td>';
-            echo '<td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td></tr>';
-            $count = $count + 1;
-    }} mysqli_free_result($result);
+                <td>'.$row["email"].'</td>
+                <td>'.$row["updates"].'</td>
+                <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td>
+                </tr>';
+                $count = $count + 1;
+    }mysqli_free_result($result);
+    }
+}
+else{
+    $count=0;
+    $rowcount = mysqli_num_rows($result3);  
+    if(empty($rowcount)){ 
+        echo " <div><h3>No Current Customers</h3></div>";
+    } else { 
+        echo"<div><h3>Current Customer List:</h3></div>";
+        while($row = $result3->fetch_assoc()) {
+            if($count % 2)echo '<tr class="evenRow">';
+            else echo '<tr class="oddRow">';
+             echo '
+                <td>'.$row["id"].'</td>
+                <td>'.$row["username"].'</td>
+                <td>'.$row["email"].'</td>
+                <td>'.$row["updates"].'</td>
+                <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td>
+                </tr>';
+                $count = $count + 1;
+    }mysqli_free_result($result3);
+    }
+}
+    
+
+
     ?>
             </table>
             <button onclick="location.href = 'home.php';">Back</button>

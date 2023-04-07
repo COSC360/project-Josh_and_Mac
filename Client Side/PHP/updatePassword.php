@@ -28,11 +28,16 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username']) && isset($_G
         $stmt2->close();
         // display success
         echo "password updated successfully :)";
+        $_SESSION["changePass_msg"] = "password updated successfully :)";
+        header("location: customer.php");
         exit;
         }
         else
             // display invalid credentials
             echo 'username and/or password are invalid :(';
+            $_SESSION["changePass_msg"] = 'username and/or password are invalid :(';
+            header("location: customer.php");
+        
         mysqli_close($con);
     }
     else echo 'wrong request or fields not set';

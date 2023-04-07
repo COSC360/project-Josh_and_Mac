@@ -65,11 +65,21 @@ $result = $con->query($sql);
     $filedata = $row["filedata"];
     if ($filedata!=null) {
    echo '<img src="data:image/jpeg;base64,'.base64_encode($filedata).'"/>';
-   echo "<a href='uploadimg.html'>Change Profile Picture</a>";
+//    echo "<a href='uploadimg.html'>Change Profile Picture</a>";
+    echo '<form action="upload.php" method="post" enctype="multipart/form-data">
+    Change Profile Picture:
+    <input type="file" name="fileToUpload" id="fileToUpload"><br>
+    <input type="submit" value="Upload Image" name="submit">
+  </form>';
     }
  else {
     //echo "No image found for id $id.";
-    echo "<a href='uploadimg.html'>Add Profile Picture</a>";
+    //echo "<a href='uploadimg.html'>Add Profile Picture</a>";
+    echo '<form action="upload.php" method="post" enctype="multipart/form-data">
+    Add Profile Picture:
+    <input type="file" name="fileToUpload" id="fileToUpload"><br>
+    <input type="submit" value="Upload Image" name="submit">
+  </form>';
 }
         }
 ?>
@@ -95,6 +105,11 @@ $result = $con->query($sql);
 		</div>
 		
         </div>
+        <?php if(isset($_SESSION["changePass_msg"])) { 
+                        echo "<h3>".$_SESSION["changePass_msg"]."</h3>";
+                        unset($_SESSION["changePass_msg"]);
+                        }
+                    ?>
         </body>
         <footer>
             <p>
