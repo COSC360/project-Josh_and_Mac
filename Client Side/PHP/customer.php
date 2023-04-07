@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include "connectDB.php";
 
 if (!isset($_SESSION['loggedin'])) {
@@ -55,12 +58,12 @@ $result = $con->query($sql);
 	<div>
 		<div class="columnleft">
             <?php
-        if ($result->num_rows > 0) {
+    if ($result->num_rows > 0) {
     // Output the image data
     $row = $result->fetch_assoc();
     $filename = $row["filename"];
     $filedata = $row["filedata"];
-    if($filedata!=null){
+    if ($filedata!=null) {
    echo '<img src="data:image/jpeg;base64,'.base64_encode($filedata).'"/>';
    echo "<a href='uploadimg.html'>Change Profile Picture</a>";
     }

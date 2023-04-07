@@ -64,15 +64,14 @@ $stmt2->close();
         while($row = $result->fetch_assoc()) {
             if($count % 2)echo '<tr class="evenRow">';
             else echo '<tr class="oddRow">';
-             echo '
+            echo '
                 <td>'.$row["id"].'</td>
                 <td>'.$row["username"].'</td>
-                <td>'.$row["email"].'</td>
-                <td>'.$row["updates"].'</td>
-                <td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td>
-                </tr>';
-                $count = $count + 1;
-    }}mysqli_free_result($result);
+                <td>'.$row["email"].'</td>'; 
+            echo ($row["updates"] == 1) ? '<td>Yes</td>' : '<td>No</td>';
+            echo '<td><a href="deleteCustomerAdmin.php?id='.$row["id"].'&username='.$row["username"].'">Delete</a></td></tr>';
+            $count = $count + 1;
+    }} mysqli_free_result($result);
     ?>
             </table>
             <button onclick="location.href = 'home.php';">Back</button>
@@ -85,7 +84,6 @@ $stmt2->close();
                     <th>Product Id</th>
                     <th>Product Name</th>
                     <th>Description</th>
-                    <th>Current Price</th>
                 </tr>
 <?php
     $count=0;
@@ -101,7 +99,6 @@ $stmt2->close();
                 <td>'.$row["id"].'</td>
                 <td>'.$row["name"].'</td>
                 <td>'.$row["description"].'</td>
-                <td></td>
                 <td><a href="editProduct.php?product_id='.$row["id"].'">Update</a></td>
                 </tr>';
                 $count = $count + 1;

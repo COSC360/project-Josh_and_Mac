@@ -116,4 +116,8 @@ footer {
 
  .oddRow{
     background-color: lightgrey;
- }
+ } 
+.productChartWrapper{ 
+    width: 800px;
+    height: 400px;
+}

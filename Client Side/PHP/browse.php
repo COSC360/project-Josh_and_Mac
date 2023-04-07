@@ -112,7 +112,7 @@ $stmt->close();
 <body>
     <div>
         <h3>Find a Product</h3>
-        <form method="" action="browse.php">
+        <form method="get" action="browse.php">
             <input placeholder="Search for..." type="text" id="search" name="search" value="<?=$search?>">
             <select name="chain" id="chain" required>
                 <!-- Saving select data from previous post request-->
@@ -157,14 +157,4 @@ $stmt->close();
     }} 
     mysqli_free_result($result);
     ?>
-     <!--  <div class="link"><a href="product.php?name='.$row["name"].'">Product </a><a href=""> Basket </a><a href=""> Store</a></div>
-    <footer>
-        <p>
-            <a href="home.html">Home</a> |
-            <a href="browse.html">Browse</a>
-        </p>
-        <p>
-            <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>
-        </p>
-    </footer>-->
 </html>

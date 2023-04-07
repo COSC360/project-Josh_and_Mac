@@ -26,7 +26,6 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username']) && isset($_G
         $stmt2 = $con->prepare("UPDATE account SET password = '$newpasshash' WHERE username = ?");
         $stmt2->execute([$username]);
         $stmt2->close();
-        
         // display success
         echo "password updated successfully :)";
         exit;
@@ -34,7 +33,6 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username']) && isset($_G
         else
             // display invalid credentials
             echo 'username and/or password are invalid :(';
-        
         mysqli_close($con);
     }
     else echo 'wrong request or fields not set';
