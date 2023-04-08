@@ -138,7 +138,7 @@ mysqli_close($con);
     <footer>
         <p>
             <a href="home.php">Home</a> |
-            <a href="browse.php">Browse</a>
+            <a href="browse.php?search=&chain=saveonfoods&chain_location=kelowna&product_category=all">Browse</a>
         </p>
         <p>
             <small><i>Copyright &copy; 2023 COSC 360 Project XTREME GPT</i></small>
