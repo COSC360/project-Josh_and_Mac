@@ -75,45 +75,49 @@ $stmt2->close();
     <script> 
             var product_id = <?php echo $product_id; ?>; 
             var location_id = <?php echo $location_id; ?>;  
-            
-            $.ajax({ 
-                url: 'getProductChartData.php', 
-                method: 'POST', 
-                data: {product_id: product_id, location_id: location_id},
-                success: function(data) { 
-                    var product_price_data = JSON.parse(data);
-                    var chartCanvas = document.getElementById('productChart').getContext('2d');
-                    var productChart = new Chart(chartCanvas, {
-                        type: 'line',
-                        data: {
-                        labels: product_price_data.dates,
-                        datasets: [{
-                            label: 'Price History',
-                            data: product_price_data.prices,
-                            fill: false,
-                            borderColor: 'rgb(75, 192, 192)',
-                            tension: 0.1,
-                        }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                beginAtZero: true, 
-                                grid: {color: 'black'}, 
-                                ticks: {color: 'black'}
-                                },
-                                x: { 
-                                 grid: {color: 'black'},
-                                 ticks: {color: 'black'}
-                                },
-                            }
-                        }
-                    });
-                }, 
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR.responseText);
-                }});
+            function refreshChart() {
 
+                $.ajax({ 
+                    url: 'getProductChartData.php', 
+                    method: 'POST', 
+                    data: {product_id: product_id, location_id: location_id},
+                    success: function(data) { 
+                        var product_price_data = JSON.parse(data);
+                        var chartCanvas = document.getElementById('productChart').getContext('2d');
+                        var productChart = new Chart(chartCanvas, {
+                            type: 'line',
+                            data: {
+                            labels: product_price_data.dates,
+                            datasets: [{
+                                label: 'Price History',
+                                data: product_price_data.prices,
+                                fill: false,
+                                borderColor: 'rgb(75, 192, 192)',
+                                tension: 0.1,
+                            }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                    beginAtZero: true, 
+                                    grid: {color: 'black'}, 
+                                    ticks: {color: 'black'}
+                                    },
+                                    x: { 
+                                    grid: {color: 'black'},
+                                    ticks: {color: 'black'}
+                                    },
+                                }
+                            }
+                        });
+                    }, 
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.responseText);
+                    }});
+                } 
+                // refreshing every 5 seconds
+                setInterval(refreshChart(), 5000);
+                
                 $(document).ready(function(){
                 var commentCount = 2;
                 $("#btn").click(function(){
