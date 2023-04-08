@@ -1,8 +1,8 @@
 <?php   
 $DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'gptdb4';
+$DATABASE_USER = '13622584';
+$DATABASE_PASS = '13622584';
+$DATABASE_NAME = 'db_13622584';
 // Try and connect using the info above. 
 $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 if ( mysqli_connect_errno() ) {
