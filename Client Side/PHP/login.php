@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
-    <!-- <script type="text/javascript" src="../script/loginValidation.js"></script> -->
+    <script type="text/javascript" src="../script/loginValidation.js"></script>
 </head>
 <header>
    <?php session_start(); include "navbar.php";?>
@@ -37,12 +37,12 @@
 			<form method="post" action="newuser.php" id="signupForm">
                     <h2>Create a Free Account</h2> 
                     <p>
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" >
+                        <label for="newusername">Username</label>
+                        <input type="text" id="newusername" name="newusername" >
                     </p>
                     <p>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" >
+                        <label for="newpassword">Password</label>
+                        <input type="password" id="newpassword" name="newpassword" >
                     </p>
                     <p>
                         <label for="email">Email</label>

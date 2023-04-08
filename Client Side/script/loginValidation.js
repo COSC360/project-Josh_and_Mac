@@ -1,68 +1,71 @@
-window.addEventListener("load", function(){
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-    var username = document.getElementsByName('username')[0].value;
-    var password = document.getElementsByName('password')[0].value;
-    if (username ==='' || password === '') {
-       event.preventDefault();
-       alert('Please fill in the required highlighted fields.');
-      if (username === ''){
-        document.getElementsByName("username")[0].classList.add("highlight");
+window.onload = function() {
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const loginUsername = document.getElementById('username');
+  const loginPassword = document.getElementById('password');
+  const signupUsername = document.getElementById('newusername');
+  const signupPassword = document.getElementById('newpassword');
+  const signupEmail = document.getElementById('email');
+  
+  loginForm.addEventListener('submit', validateLoginForm);
+  signupForm.addEventListener('submit', validateSignupForm);
+  
+  function validateLoginForm(event) {
+    event.preventDefault();
+    var flag = false; 
+  
+    if (loginUsername.value.trim() === '') {
+      loginUsername.classList.add("highlight")
+      flag = true; 
+    } else {
+      loginUsername.classList.remove("highlight")
+    }
+  
+    if (loginPassword.value.trim() === '') {
+      loginPassword.classList.add("highlight")
+      flag = true; 
+    } else {
+      loginPassword.classList.remove("highlight")
+    }
+      if(flag) { 
+        alert("please enter valid data");
       }
-      if (password === ""){
-        document.getElementsByName("password")[0].classList.add("highlight");
-      }
-    }
-  });
-  document.getElementsByName("username")[0].addEventListener("input", function(e){
-    if (this.value !==""){
-        this.classList.remove("highlight");
+  
+    if (loginUsername.value.trim() !== '' && loginPassword.value.trim() !== '') {
+      this.submit();
     }
   }
-  );
-
-  document.getElementsByName("password")[0].addEventListener("input", function(e){
-    if (this.value !==""){
-        this.classList.remove("highlight");
+  
+  function validateSignupForm(event) {
+    event.preventDefault();
+    var flag = false; 
+  
+    if (signupUsername.value.trim() === '') {
+      signupUsername.classList.add("highlight")
+      flag = true; 
+    } else {
+      signupUsername.classList.remove("highlight")
     }
-  }
-  );
-});
-
-window.addEventListener("load", function(){
-  document.getElementById('signupForm').addEventListener('submit', function(event) {
-  var username = document.getElementsByName('username')[0].value;
-  var password = document.getElementsByName('password')[0].value;
-  var email = document.getElementsByName('email')[0].value;
-  if (username === '' || password === '' || email ==='') {
-     event.preventDefault();
-     alert('Please fill in the required highlighted fields.');
-    if (username === ''){
-      document.getElementsByName("username")[1].classList.add("highlight");
+  
+    if (signupPassword.value.trim() === '') {
+      signupPassword.classList.add("highlight")
+      flag = true; 
+    } else {
+      signupPassword.classList.remove("highlight")
     }
-    if (password === ""){
-      document.getElementsByName("password")[1].classList.add("highlight");
+  
+    if (signupEmail.value.trim() === '') {
+      signupEmail.classList.add("highlight")
+      flag = true; 
+    } else {
+      signupEmail.classList.remove("highlight")
     }
-    if (email === ""){
-      document.getElementsByName("email")[0].classList.add("highlight");
+  
+    if(flag) { 
+      alert("please enter valid data");
     }
-  }
-});
-document.getElementsByName("username")[1].addEventListener("input", function(e){
-  if (this.value !==""){
-      this.classList.remove("highlight");
-  }
-}
-);
-document.getElementsByName("email")[0].addEventListener("input", function(e){
-  if (this.value !==""){
-      this.classList.remove("highlight");
-  }
-}
-);
-document.getElementsByName("password")[1].addEventListener("input", function(e){
-  if (this.value !==""){
-      this.classList.remove("highlight");
-  }
-}
-);
-});
+  
+    if (signupUsername.value.trim() !== '' && signupPassword.value.trim() !== '' && signupEmail.value.trim() !== '') {
+      this.submit();
+    }
+  }};

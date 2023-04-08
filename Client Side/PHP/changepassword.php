@@ -26,7 +26,7 @@
 </script>
 </head>
 <header>
-    <?php include "navbar.php";?>
+    <?php session_start(); include "navbar.php";?>
 </header>
 <body>
 	<h1>Change Password</h1>

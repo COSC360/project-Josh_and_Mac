@@ -75,7 +75,7 @@ $stmt2->close();
     <script> 
             var product_id = <?php echo $product_id; ?>; 
             var location_id = <?php echo $location_id; ?>;  
-            console.log(product_id);
+            
             $.ajax({ 
                 url: 'getProductChartData.php', 
                 method: 'POST', 
@@ -113,22 +113,19 @@ $stmt2->close();
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR.responseText);
                 }});
-        </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script>
-        //jQuery code for AJAX
-        $(document).ready(function(){
-            var commentCount = 2;
-            $("#btn").click(function(){
-                commentCount = commentCount + 2;
-                $("#comments").load("load-comments.php", {
-                    commentNewCount: commentCount,
-                    product_name: "<?php echo $product_name; ?>",
-                    product_url_query: "<?php echo $product_url_query; ?>"              
-                 }); 
-            });
+
+                $(document).ready(function(){
+                var commentCount = 2;
+                $("#btn").click(function(){
+                    commentCount = commentCount + 2;
+                    $("#comments").load("load-comments.php", {
+                        commentNewCount: commentCount,
+                        product_name: "<?php echo $product_name; ?>",
+                        product_url_query: "<?php echo $product_url_query; ?>"              
+                    }); 
+                });
         }); 
-    </script>
+        </script>
 </head>
 <header>
         <?php include "navbar.php"; ?>

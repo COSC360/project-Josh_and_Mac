@@ -11,7 +11,6 @@
     JOIN comments c ON c.account_id = a.id
     JOIN product p ON p.id = c.product_id
     WHERE p.name = ? LIMIT $commentNewCount");
-    // In this case we can use the search to get the comment info.
     $stmt2->bind_param('s', $product_name);
     $stmt2->execute();
     $result2 = $stmt2->get_result();

@@ -111,17 +111,6 @@ mysqli_close($con);
         </p>
      </div>
      <hr>
-     <div>
-        <div>
-        <p class="left">View Product details and price history</p>
-        </div>
-        <div>
-        <p class="centre">Add or remove items from your basket</p>
-        </div>
-        <div>
-        <p class="right">Buy direct from grocery store website</p>
-        </div>
-     </div>
         <div class="left">
         <h4>Most Popular Product!</h4>
         <p><?php echo '<div class="col">
@@ -131,52 +120,7 @@ mysqli_close($con);
                 </div>
                 </div>'; ?></p>
         </div>
-        <div class="centre">
-        <h4>Biggest Price Drop!</h4>
-        <p>	<canvas id="scatterPlot"></canvas>
-	<script>
-		// Define the data for the scatter plot
-        // Use this template and fill the x,y data with price/timestamp and apply for each product displayed!
-		var data = {
-			datasets: [{
-				label: 'Product Price',
-				data: [
-					{ x: 10, y: 20 },
-					{ x: 20, y: 30 },
-					{ x: 30, y: 40 },
-					{ x: 40, y: 50 },
-					{ x: 50, y: 60 }
-				]
-			}]
-		};
-		
-		// Get the canvas element and context
-		var canvas = document.getElementById("scatterPlot");
-		var ctx = canvas.getContext("2d");
-		
-		// Create the scatter plot
-		var scatterPlot = new Chart(ctx, {
-			type: 'scatter',
-			data: data,
-			options: {
-				scales: {
-					xAxes: [{
-						scaleLabel: {
-							display: true,
-							labelString: 'Date'
-						}
-					}],
-					yAxes: [{
-						scaleLabel: {
-							display: true,
-							labelString: 'Price ($)'
-						}
-					}]
-				}
-			}
-		});
-	</script></p>
-     </div>
+        <div class="centre"> </div>
      <div class="right">
         <h4>Most Comments!</h4>
         <p><?php if($product_name_comment != NULL){

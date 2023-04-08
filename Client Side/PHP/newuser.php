@@ -6,8 +6,8 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    $username = $_POST['username'];
-    $password =  $_POST['password'];
+    $username = $_POST['newusername'];
+    $password =  $_POST['newpassword'];
     $email = $_POST['email']; 
 
     // Check if username already exists

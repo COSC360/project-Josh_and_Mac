@@ -10,18 +10,31 @@ include "connectDB.php";
         $email = $_POST['email'];
         $updates = $_POST['updates'];
         $id = $_SESSION['id'];
+
         if($updates == NULL) { 
             $updates = 0;
-        }
-        $stmt = $con->prepare("UPDATE account SET username=?, email =?, updates =? WHERE id = ?");
-        $stmt->bind_param('ssss', $username, $email, $updates, $id);
+        } 
+        // Check if username already exists
+        $sql = "SELECT COUNT(*) as count FROM account WHERE username = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
-        
-        if($stmt->execute()){
-            header("Location: customer.php");
-        } else{
-            echo "ERROR: Hush! Sorry $sql. "
-                . mysqli_error($con);
+        $result = $stmt->get_result();
+        $count = $result->fetch_assoc()['count'];
+
+        if($count > 0) {
+            $_SESSION["edituser_msg"] = "User already exists with username: $username";
+            header("Location: editcustomer.php");
+        } else {
+            $stmt = $con->prepare("UPDATE account SET username=?, email =?, updates =? WHERE id = ?");
+            $stmt->bind_param('ssss', $username, $email, $updates, $id);
+            $stmt->execute();
+            if($stmt->execute()){
+                header("Location: customer.php");
+            } else{
+                echo "ERROR: Hush! Sorry $sql. "
+                    . mysqli_error($con);
+            }
         }
          
         // Close connection

@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/layout.css"/>
-    <script type="text/javascript" src="../script/validation.js"></script>
+    <!-- <script type="text/javascript" src="../script/validation.js"></script>-->
 </head>
 <header>
     <div class="flex-container">    
@@ -19,11 +19,11 @@
 			<form method="post" action="edituser.php" id="loginForm">
                     <p>
                         <label for="username">Username: </label>
-                        <input type="text" id="username" name="username">
+                        <input type="text" id="username" name="username" required>
                     </p>
                     <p>
                         <label for="email">Email: </label>
-                        <input type="email" id="email" name="email">
+                        <input type="email" id="email" name="email" required>
                     </p>
                     <p>
                         <label for="updates">Email Updates: </label>
@@ -31,7 +31,11 @@
                     </p>
                     <button type="submit">Submit</button>
 			</form>
-            <button onclick="location.href = 'customer.php';">Back</button>
+            <button onclick="location.href = 'customer.php';">Back</button> 
+            <?php if(isset($_SESSION["edituser_msg"])) {
+                 echo "<h3>".$_SESSION["edituser_msg"]."</h3>";
+                 unset($_SESSION["edituser_msg"]);
+            }?>
              <!--<button onclick="location.href = 'changepassword.php';">Change Password</button>-->
 
 		</div>
