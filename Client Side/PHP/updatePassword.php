@@ -15,26 +15,23 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username']) && isset($_G
 
     // check to see if user exists with username and/or email
     $stmt = $con->prepare("SELECT * FROM account WHERE username = ? AND password = ?");
-    $stmt->execute([$username, $hashedpassword]);
-    $user = $stmt->fetch();
-    $stmt->close();
+    $stmt->bind_param("ss", $username, $hashedpassword);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rowcount = mysqli_num_rows($result);  
     
     // check if a user was found
-    if ($user) {
-
+    if ($rowcount == 1) {
         // if user found, update password
-        $stmt2 = $con->prepare("UPDATE account SET password = '$newpasshash' WHERE username = ?");
-        $stmt2->execute([$username]);
+        $stmt2 = $con->prepare("UPDATE account SET password = ? WHERE username = ?");
+        $stmt2->bind_param("ss", $newpasshash, $username);
+        $stmt2->execute();
         $stmt2->close();
-        // display success
-        echo "password updated successfully :)";
         $_SESSION["changePass_msg"] = "password updated successfully :)";
         header("location: customer.php");
         exit;
-        }
-        else
+        } else
             // display invalid credentials
-            echo 'username and/or password are invalid :(';
             $_SESSION["changePass_msg"] = 'username and/or password are invalid :(';
             header("location: customer.php");
         
